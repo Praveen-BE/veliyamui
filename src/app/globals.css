@@ -1,6 +1,22 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-primary: #e4f0f7; /* Alice Blue or Light Azure*/
+  --color-secondary: #9333ea;
+  --color-ctaPrimary: #ff6f61;
+  --color-ctaSecondary: #3e2a2a;
+  --color-background: #ffffff;
+  --color-textPrimary: #3e2a2a;
+  --color-textSecondary: #ffb3a0;
+  --spacing-base: 1rem;
 }
+
+/* When the system is in dark mode, override the variable */
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --color-primary: red;
+    --color-secondary: #9333ea;
+    --color-bg: #ffffff;
+    --spacing-base: 1rem;
+  }
+} */
