@@ -7,7 +7,14 @@ interface navButtonProps {
 }
 
 const NavButton = ({ navName, navLinkName }: navButtonProps) => {
-  return <Link href={"/" + navLinkName}>{navName}</Link>;
+  return (
+    <Link
+      href={"/" + navLinkName}
+      className="text-xl bg-textSecondary px-4 py-1 rounded-tl-3xl rounded-br-2xl"
+    >
+      {navName}
+    </Link>
+  );
 };
 
 export default NavButton;

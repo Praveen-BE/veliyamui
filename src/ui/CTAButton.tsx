@@ -10,7 +10,7 @@ const CTAButton = ({ ctaName, ctaLinkName }: ctaButtonProps) => {
   return (
     <Link
       href={"/" + ctaLinkName}
-      className="px-4 py-0.5 bg-ctaPrimary text-md rounded-tl-3xl rounded-br-2xl"
+      className="px-4 py-1 bg-ctaPrimary text-lg rounded-tl-3xl rounded-br-2xl md:text-xl"
     >
       {ctaName}
     </Link>
@@ -35,7 +35,7 @@ export const CTAOutlineButton = ({ ctaName, ctaLinkName }: ctaButtonProps) => {
   return (
     <Link
       href={"/" + ctaLinkName}
-      className="px-6 py-1 border-2 border-ctaSecondary text-textPrimary text-xl rounded-tl-3xl rounded-br-2xl"
+      className="px-6 py-1 border-2 border-ctaSecondary text-textPrimary text-xl sm:text-2xl md:text-3xl rounded-tl-3xl rounded-br-2xl"
     >
       {ctaName}
     </Link>

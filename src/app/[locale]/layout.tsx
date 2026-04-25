@@ -43,7 +43,7 @@ export default async function RootLayout({ children, params }: Props) {
     >
       <body className="min-h-full flex flex-col">
         <NextIntlClientProvider messages={messages}>
-          <Header />
+          <Header lang={locale} />
           {children}
           <Footer />
         </NextIntlClientProvider>

@@ -24,11 +24,11 @@ const FAQElement = ({ question, answer }: FAQElementProps) => {
   }, []);
 
   return (
-    <div className="border-b-2 px-2 mt-2" ref={dropdownRef}>
+    <div className="border-b-2 px-2 mt-2 w-full" ref={dropdownRef}>
       {/* Dropdown Button */}
       <div onClick={() => setIsOpen(!isOpen)} className="flex">
-        <p className="w-80 font-semibold text-lg">{question}</p>
-        <ChevronDownIcon className="w-6 h-6" />
+        <p className="w-11/12 font-semibold text-lg sm:text-xl">{question}</p>
+        <ChevronDownIcon className="w-6 h-6 sm:w-8 sm:h-8" />
       </div>
 
       {/* Dropdown show hide item */}

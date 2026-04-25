@@ -21,7 +21,7 @@ const TestimonialCard = ({
   profileAlt,
 }: TestimonialProps) => {
   return (
-    <div className="bg-primary rounded-tl-4xl rounded-br-4xl p-4">
+    <div className="w-full sm:w-8/12 bg-primary rounded-tl-4xl rounded-br-4xl p-4">
       <div>
         <div className="flex gap-3 items-center">
           <Image

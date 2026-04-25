@@ -42,7 +42,7 @@ export default function TestimonialSection() {
       <div className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide">
         {testmoniyals.map((testi, index) => (
           <article key={testi.id} className="min-w-full snap-center p-4">
-            <div className="relative h-fit w-full">
+            <div className="relative h-fit w-full flex justify-center">
               <TestimonialCard
                 name={testi.name}
                 company={testi.company}

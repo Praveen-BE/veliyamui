@@ -1,6 +1,30 @@
 {
+  "Header": {
+    "create": "Create",
+    "home": "Home",
+    "blogs": "Blogs",
+    "myBlogs": "My Blogs"
+  },
+  "Footer": {
+    "home": "Home",
+    "blogs": "Blogs",
+    "myBlogs": "My Blogs",
+    "aboutUs": "About Us",
+    "contact": "Contact"
+  },
   "HomePage": {
     "title": "வணக்கம் உலகம்",
-    "description": "வரவேற்கிறேன்"
+    "description": "வரவேற்கிறேன்",
+    "heroSlogan": "Stories that shape wisdom, voices that spark change.",
+    "heroDescription": "Veliyam is where timeless Tamil thought meets global ideas. Explore blogs that blend culture, creativity, and technology into narratives worth sharing.",
+    "heroCTAcontent": "Ready to discover insights that matter? Click below and begin your journey…",
+    "heroCTAButtonName": "Explore",
+    "faq1Question": "What kind of blogs does Veliyam publish?",
+    "faq1Answer": "Veliyam focuses on culture, creativity, technology, and storytelling — blending Tamil wisdom with global perspectives.",
+    "faq2Question": "Is Veliyam content multilingual?",
+    "faq2Answer": "Yes. Our blogs are designed with multilingual support so readers can enjoy content in Tamil, English, and other languages.",
+    "faq3Question": "Can I contribute to Veliyam?",
+    "faq3Answer": "Absolutely. We welcome guest writers and collaborators who share our vision of meaningful storytelling.",
+    "bottomCTAcontent": "Don’t just read — experience. Veliyam is more than blogs; it’s a journey into ideas. Click explore and see where wisdom meets creativity."
   }
 }

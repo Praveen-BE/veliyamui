@@ -15,17 +15,20 @@ export default function Language() {
 
   return (
     <>
-      <label htmlFor="language">Choose Language:</label>
+      {/* <label className="text-sm" htmlFor="language">
+        Lang:
+      </label> */}
+
       <select
+        className="text-sm text-textPrimary border border-textSecondary px-4 py-1 rounded-tl-3xl rounded-br-2xl"
         id="language"
         name="language"
         defaultValue={currentLocale}
+        aria-placeholder="Language"
         onChange={(e) => switchLocale(e.target.value)}
       >
         <option value="en">English</option>
         <option value="ta">தமிழ்</option>
-        <option value="hi">हिन्दी</option>
-        <option value="fr">Français</option>
       </select>
     </>
   );
