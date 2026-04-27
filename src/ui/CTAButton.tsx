@@ -10,7 +10,7 @@ const CTAButton = ({ ctaName, ctaLinkName }: ctaButtonProps) => {
   return (
     <Link
       href={"/" + ctaLinkName}
-      className="px-4 py-1 bg-ctaPrimary text-lg rounded-tl-3xl rounded-br-2xl md:text-xl"
+      className="px-4 py-1 bg-ctaPrimary text-sm sm:text-lg rounded-tl-3xl rounded-br-2xl md:text-xl"
     >
       {ctaName}
     </Link>

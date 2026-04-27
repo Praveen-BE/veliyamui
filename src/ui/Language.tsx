@@ -27,8 +27,12 @@ export default function Language() {
         aria-placeholder="Language"
         onChange={(e) => switchLocale(e.target.value)}
       >
-        <option value="en">English</option>
-        <option value="ta">தமிழ்</option>
+        <option value="en" className="">
+          English
+        </option>
+        <option value="ta" className="">
+          தமிழ்
+        </option>
       </select>
     </>
   );

@@ -25,13 +25,13 @@ const Header = async ({ lang }: { lang: string }) => {
         />
       )}
       <div className="hidden md:flex gap-4">
-        <NavButton navName="Home" navLinkName="home" />
+        <NavButton navName="Home" navLinkName="" />
         <NavButton navName="Blogs" navLinkName="blogs" />
         <NavButton navName="My Blogs" navLinkName="myblogs" />
       </div>
       <Language />
       <div className="flex items-center gap-3">
-        <CTAButton ctaName="Create" ctaLinkName="create" />
+        <CTAButton ctaName="Create" ctaLinkName="myblogs/create" />
         <Image
           className="w-9 h-9 md:w-12 md:h-12 rounded-full border border-textPrimary"
           src={NotInterestSetProfile}
