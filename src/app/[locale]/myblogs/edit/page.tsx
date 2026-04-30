@@ -1,7 +1,8 @@
 "use client";
 import React, { useState } from "react";
-import ImageUpload from "../../../../components/ImageUpload";
+import ImageUpload from "../../../../components/CoverImageUpload";
 import { CatagoriesListData } from "@/utils/constant";
+import LexicalEditor from "@/components/LexicalEditor";
 interface Category {
   id: number; // Changed from string to number
   name: string;
@@ -31,7 +32,7 @@ const EditPage = () => {
       <label>Cover Image :</label>
       <ImageUpload />
       <label>Blog Content :</label>
-      <div className="w-full bg-primary h-40">Blogs Content</div>
+      <LexicalEditor />
       <label>Category :</label>
       <div>
         {/* postCategories Chips */}

@@ -7,6 +7,7 @@ import VeliyamTamilLogo from "../../public/Veliyam-Tamil-Logo.svg";
 import NotInterestSetProfile from "../../public/dont inteterst to set profile1.svg";
 import { Bars3Icon } from "@heroicons/react/24/solid";
 import { getTranslations } from "next-intl/server";
+import { ThemeToggle } from "./ThemeToggle";
 const Header = async ({ lang }: { lang: string }) => {
   const t = await getTranslations("HomePage");
   return (
@@ -30,6 +31,7 @@ const Header = async ({ lang }: { lang: string }) => {
         <NavButton navName="My Blogs" navLinkName="myblogs" />
       </div>
       <Language />
+      {/* <ThemeToggle /> */}
       <div className="flex items-center gap-3">
         <CTAButton ctaName="Create" ctaLinkName="myblogs/create" />
         <Image
