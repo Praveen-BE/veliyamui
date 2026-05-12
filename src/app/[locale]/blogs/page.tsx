@@ -37,14 +37,25 @@ const BlogsPage = async ({ searchParams }: BlogsPageProps) => {
         </div>
       </div>
       <h1 className="mt-2">Latest Post</h1>
-      <div>
-        <BlogCard />
-        <BlogCard />
-        <BlogCard />
-      </div>
+      <div></div>
       {/* <ul>
         {items.map((item) => (
-          <li key={item}><BlogCard /></li>
+          <li key={item.id}>
+             <BlogCard id={id}
+        slug={slug}
+        published={published}
+        language_code={language_code}
+        title={title}
+        excerpt={excerpt}
+        meta_description={meta_description}
+        meta_keywords={meta_keywords}
+        cover_image={cover_image}
+        cover_image_alt_tag={cover_image_alt_tag}
+        created_at={created_at}
+        updated_at={updated_at}
+        author={author}
+        categories={categories}/>
+          </li>
         ))}
       </ul> */}
       <Pagination
