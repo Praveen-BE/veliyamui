@@ -23,16 +23,30 @@ interface Author {
 }
 
 interface PostData {
+  id: string | number;
+  slug: string;
+  published: boolean;
+  language_code: string;
   title: string;
+  excerpt: string;
+  meta_description: string;
+  meta_keywords: string;
+  cover_image: string;
+  cover_image_alt_tag: string;
+  created_at: string;
+  updated_at: string;
+  author: {
+    id: string | number;
+    name: string;
+    email: string;
+  };
+  categories: any[];
+  lexical_json: any;
   topic: {
     id: number;
-    name: string;
     slug: string;
+    name: string;
   };
-  author: Author;
-  cover_image?: string;
-  cover_image_alt_tag?: string;
-  lexical_json: string;
 }
 
 // ── LexicalParser ────────────────────────────────────────────────────────────
@@ -125,7 +139,7 @@ export const BlogSinglePost = ({ postData }: BlogSinglePostProps) => {
     <main style={{ maxWidth: "800px", margin: "0 auto", padding: "20px" }}>
       {/* Title & Author */}
       <h1>{postData.title}</h1>
-      <p>By: {postData.author?.display_name ?? "Unknown Author"}</p>
+      <p>By: {postData.author?.name ?? "Unknown Author"}</p>
       <p>Topic: {postData.topic.name}</p>
 
       {/* Cover image — only render if a URL is present */}

@@ -1,4 +1,5 @@
 import "dotenv/config";
+import { cookies } from "next/headers";
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
 interface UserProfile {
@@ -13,26 +14,36 @@ interface UserProfile {
   };
 }
 
-export async function getUserProfileByToken({
+export default async function getProfile({
   lang,
 }: {
   lang: string;
 }): Promise<UserProfile | null> {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token");
+  // console.log(token?.value);
+  if (!token?.value) return null;
+
   try {
-    const res = await fetch(`${API_URL}/profile/me/${lang}`, {
-      method: "GET",
-      credentials: "include",
+    const response = await fetch(`${API_URL}/profile/me/:${lang}`, {
+      method: "GET", // Explicitly state method
       headers: {
-        "Content-Type": "application/json",
+        // Change this from 'Cookie' to 'Authorization'
+        // Authorization: `Bearer ${token.value}`,
+        // "Content-Type": "application/json",
+        Cookie: `token=${token.value ?? ""}`,
       },
-      next: { revalidate: 3600 },
+      next: { revalidate: 0 }, // Modern Next.js way to disable caching
     });
 
-    if (!res.ok) return null;
+    if (!response.ok) {
+      console.error("Fetch failed with status:", response.status);
+      return null;
+    }
 
-    return (await res.json()) as UserProfile;
+    return await response.json();
   } catch (error) {
-    console.error("Error fetching user:", error);
+    console.error("API Error:", error);
     return null;
   }
 }

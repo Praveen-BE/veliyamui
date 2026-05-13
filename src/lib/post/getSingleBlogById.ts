@@ -16,7 +16,7 @@ interface MyBlogsData {
   updated_at: string;
   author: {
     id: string | number;
-    display_name: string;
+    name: string;
     email: string;
   };
   categories: any[];

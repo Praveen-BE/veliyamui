@@ -12,6 +12,11 @@ interface MyBlogsData {
   language_code: string;
   title: string;
   excerpt: string;
+  topic: {
+    id: number;
+    slug: string;
+    name: string;
+  };
   meta_description: string;
   meta_keywords: string;
   cover_image: string;
@@ -33,6 +38,7 @@ const BlogCard = ({
   language_code,
   title,
   excerpt,
+  topic,
   meta_description,
   meta_keywords,
   cover_image,
@@ -73,8 +79,8 @@ const BlogCard = ({
           </ul>
           <p className="text-[16px] sm:text-lg line-clamp-4">{excerpt}</p>
           <ul className="flex gap-6 sm:gap-9 sm:text-lg list-disc marker:text-ctaPrimary pl-4 ">
-            {categories.map(() => (
-              <li>Tech</li>
+            {categories.map((item) => (
+              <li key={item}>Tech</li>
             ))}
           </ul>
           <p>
@@ -84,9 +90,7 @@ const BlogCard = ({
             </span>
           </p>
           <Link
-            href={
-              "/" + language_code + "/blogs/" + "topicslug" + "/titleSlug/" + id
-            }
+            href={`/${language_code}/blogs/${topic.slug}/${slug}/${id}`}
             className="flex items-center h-6 pt-2 gap-1"
           >
             <p className="text-secondary text-sm sm:text-lg font-bold">
@@ -109,6 +113,7 @@ export const MyBlogCard = ({
   language_code,
   title,
   excerpt,
+  topic,
   meta_description,
   meta_keywords,
   cover_image,
@@ -129,6 +134,7 @@ export const MyBlogCard = ({
         language_code={language_code}
         title={title}
         excerpt={excerpt}
+        topic={topic}
         meta_description={meta_description}
         meta_keywords={meta_keywords}
         cover_image={cover_image}

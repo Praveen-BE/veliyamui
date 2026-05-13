@@ -59,7 +59,7 @@ const EditPage = () => {
   const pathname = usePathname();
   const [loading, setLoading] = useState(false);
   const [postCategories, setPostCategories] = useState<number[]>([]);
-  const [topicId, setTopicId] = useState<number>(0);
+  const [topicId, setTopicId] = useState<number>(1);
   const [imgAlt, setImgAlt] = useState<string>("");
   const [editorText, setEditorText] = useState("");
   const [editorState, setEditorState] = useState<
@@ -81,7 +81,7 @@ const EditPage = () => {
     categories: postCategories, // Adjust based on your category object structure
     gallery: [],
     topic: {
-      id: 0,
+      id: 1,
       slug: "",
       name: "",
     },

@@ -14,6 +14,11 @@ interface MyBlogsData {
   language_code: string;
   title: string;
   excerpt: string;
+  topic: {
+    id: number;
+    slug: string;
+    name: string;
+  };
   meta_description: string;
   meta_keywords: string;
   cover_image: string;
@@ -93,6 +98,7 @@ const MyBlogsPage = ({ searchParams }: BlogsPageProps) => {
                 language_code={post.language_code}
                 title={post.title}
                 excerpt={post.excerpt}
+                topic={post.topic}
                 meta_description={post.meta_description}
                 meta_keywords={post.meta_keywords}
                 cover_image={post.cover_image}

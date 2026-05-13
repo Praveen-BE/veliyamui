@@ -8,6 +8,11 @@ interface MyBlogsData {
   language_code: string;
   title: string;
   excerpt: string;
+  topic: {
+    id: number;
+    slug: string;
+    name: string;
+  };
   meta_description: string;
   meta_keywords: string;
   cover_image: string;

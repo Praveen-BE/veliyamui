@@ -1,5 +1,6 @@
 import BlogCard from "@/components/BlogCard";
 import Pagination from "@/components/Pagination";
+import { getPostsAPI } from "@/lib/post/getPostsAPI";
 import { FunnelIcon } from "@heroicons/react/24/outline";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
 
@@ -10,6 +11,13 @@ interface BlogsPageProps {
 const BlogsPage = async ({ searchParams }: BlogsPageProps) => {
   const fetchedparams = await searchParams;
   const currentPage = Number(fetchedparams?.page);
+  const blogPostData = await getPostsAPI({
+    lang: "en",
+    limit: 5,
+    offset: 0,
+    author_id: 0,
+  });
+  console.log(blogPostData);
   const itemsPerPage = 5;
   const totalItems = 50;
 
@@ -38,26 +46,29 @@ const BlogsPage = async ({ searchParams }: BlogsPageProps) => {
       </div>
       <h1 className="mt-2">Latest Post</h1>
       <div></div>
-      {/* <ul>
-        {items.map((item) => (
-          <li key={item.id}>
-             <BlogCard id={id}
-        slug={slug}
-        published={published}
-        language_code={language_code}
-        title={title}
-        excerpt={excerpt}
-        meta_description={meta_description}
-        meta_keywords={meta_keywords}
-        cover_image={cover_image}
-        cover_image_alt_tag={cover_image_alt_tag}
-        created_at={created_at}
-        updated_at={updated_at}
-        author={author}
-        categories={categories}/>
+      <ul>
+        {blogPostData.map((blog: any) => (
+          <li key={blog.id}>
+            <BlogCard
+              id={blog.id}
+              slug={blog.slug}
+              published={blog.published}
+              language_code={blog.language_code}
+              title={blog.title}
+              excerpt={blog.excerpt}
+              topic={blog.topic}
+              meta_description={blog.meta_description}
+              meta_keywords={blog.meta_keywords}
+              cover_image={blog.cover_image}
+              cover_image_alt_tag={blog.cover_image_alt_tag}
+              created_at={blog.created_at}
+              updated_at={blog.updated_at}
+              author={blog.author}
+              categories={blog.categories}
+            />
           </li>
         ))}
-      </ul> */}
+      </ul>
       <Pagination
         totalItems={totalItems}
         itemsPerPage={itemsPerPage}

@@ -10,46 +10,12 @@ import { getTranslations } from "next-intl/server";
 import { ThemeToggle } from "./ThemeToggle";
 
 import NavProfileOrNavAuth from "@/ui/NavProfileOrNavAuth";
-import { cookies } from "next/headers";
 import "dotenv/config";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
-
-interface UserProfile {
-  id: string;
-  email: string;
-  role: string;
-  display_name: string;
-  bio: string;
-  language_code: string;
-  created_at: string;
-}
-
-async function getProfile(): Promise<UserProfile | null> {
-  const cookieStore = await cookies();
-  const token = cookieStore.get("token");
-
-  // If no cookie exists, don't even try to call the API
-  if (!token) return null;
-
-  try {
-    // Call your backend API from the server
-    const response = await fetch(`${API_URL}/profile/me`, {
-      headers: {
-        Cookie: `token=${token.value}`, // Pass the cookie manually to your backend
-      },
-      next: { revalidate: 3600 }, // Cache for 1 hour
-    });
-
-    if (!response.ok) return null;
-    return await response.json();
-  } catch (error) {
-    return null;
-  }
-}
+import getProfile from "@/lib/profile/getProfile";
 
 const Header = async ({ lang }: { lang: string }) => {
-  const user = await getProfile();
+  const user = await getProfile({ lang: lang });
+  console.log("User Data :-" + user);
   const t = await getTranslations("HomePage");
   return (
     <div className="w-full h-16 px-2 bg-primary flex justify-between items-center">

@@ -24,7 +24,7 @@ export async function updatePublishAPI({ id, lang, publish }: PublishProps) {
 
     return await res.json();
   } catch (error) {
-    console.error("Error fetching user:", error);
+    console.error("Error fetching Update Publish:", error);
     return null;
   }
 }
