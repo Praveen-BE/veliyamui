@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import sampleCoverImage from "../../public/blogsimagewithBalloons.jpg";
 
 // ── Types ────────────────────────────────────────────────────────────────────
 
@@ -128,7 +129,7 @@ export const BlogSinglePost = ({ postData }: BlogSinglePostProps) => {
       <p>Topic: {postData.topic.name}</p>
 
       {/* Cover image — only render if a URL is present */}
-      {postData.cover_image && (
+      {/* {postData.cover_image && (
         <Image
           width="100"
           height="100"
@@ -136,7 +137,14 @@ export const BlogSinglePost = ({ postData }: BlogSinglePostProps) => {
           alt={postData.cover_image_alt_tag ?? postData.title}
           style={{ width: "100%", borderRadius: "10px", display: "block" }}
         />
-      )}
+      )} */}
+      <Image
+        width="100"
+        height="100"
+        src={sampleCoverImage}
+        alt={"Sample Cover Image"}
+        style={{ width: "100%", borderRadius: "10px", display: "block" }}
+      />
 
       <hr style={{ margin: "24px 0" }} />
 

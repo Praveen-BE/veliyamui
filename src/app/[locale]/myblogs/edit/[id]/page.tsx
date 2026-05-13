@@ -10,6 +10,7 @@ import { usePathname, useRouter } from "@/navigation";
 import { SerializedEditorState, SerializedLexicalNode } from "lexical";
 import { saveBlogPostLexicalJsonAndContent } from "@/lib/editor/saveLexicalJson&Content";
 import { saveSeoContentAndCategories } from "@/lib/editor/saveSeoAndCategories";
+import { updatePublishAPI } from "@/lib/editor/updatePublishAPI";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
@@ -171,6 +172,14 @@ const EditPage = () => {
     });
   };
 
+  const updateToggle = async () => {
+    const res = await updatePublishAPI({
+      id: postData.id,
+      publish: !postData.published,
+      lang: postData.language_code,
+    });
+    console.log(res);
+  };
   console.log(postData);
 
   return (
@@ -342,7 +351,14 @@ const EditPage = () => {
         onClick={saveSeoAndCategories}
         className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition-colors"
       >
-        Save Content
+        Save Seo Content
+      </button>
+      <h1 className="mt-5">Save Contend and Save Seo Content Before Publish</h1>
+      <button
+        onClick={updateToggle}
+        className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 transition-colors"
+      >
+        {postData.published ? "Private" : "Publish"}
       </button>
     </div>
   );
