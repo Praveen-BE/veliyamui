@@ -5,13 +5,13 @@ import Image from "next/image";
 import VeliyamEnglish from "../../public/Veliyam-English-Logo.svg";
 import VeliyamTamilLogo from "../../public/Veliyam-Tamil-Logo.svg";
 
-import { Bars3Icon } from "@heroicons/react/24/solid";
 import { getTranslations } from "next-intl/server";
 import { ThemeToggle } from "./ThemeToggle";
 
 import NavProfileOrNavAuth from "@/ui/NavProfileOrNavAuth";
 import "dotenv/config";
 import getProfile from "@/lib/profile/getProfile";
+import SideMenuToggle from "./SideMenuToggle";
 
 const Header = async ({ lang }: { lang: string }) => {
   const user = await getProfile({ lang: lang });
@@ -42,7 +42,7 @@ const Header = async ({ lang }: { lang: string }) => {
       <div className="flex items-center gap-3">
         <CTAButton ctaName="Create" ctaLinkName="myblogs/create" />
         <NavProfileOrNavAuth initialUser={user} />
-        <Bars3Icon className="w-8 h-8 md:w-12 md:h-12" />
+        <SideMenuToggle />
       </div>
     </div>
   );
