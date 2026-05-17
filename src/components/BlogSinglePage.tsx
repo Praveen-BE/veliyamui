@@ -47,6 +47,8 @@ interface PostData {
     slug: string;
     name: string;
   };
+  avg_rating: number;
+  total_ratings: number;
 }
 
 // ── LexicalParser ────────────────────────────────────────────────────────────
@@ -141,6 +143,9 @@ export const BlogSinglePost = ({ postData }: BlogSinglePostProps) => {
       <h1>{postData.title}</h1>
       <p>By: {postData.author?.name ?? "Unknown Author"}</p>
       <p>Topic: {postData.topic.name}</p>
+      <p>
+        Rating: {`${postData.avg_rating} (${postData.total_ratings}) rating `}
+      </p>
 
       {/* Cover image — only render if a URL is present */}
       {/* {postData.cover_image && (

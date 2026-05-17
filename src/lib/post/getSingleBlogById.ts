@@ -26,6 +26,8 @@ interface MyBlogsData {
     slug: string;
     name: string;
   };
+  avg_rating: number;
+  total_ratings: number;
 }
 
 export async function getSingleBlogById({

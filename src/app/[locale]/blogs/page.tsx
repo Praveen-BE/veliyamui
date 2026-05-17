@@ -3,6 +3,9 @@ import Pagination from "@/components/Pagination";
 import { getPostsAPI } from "@/lib/post/getPostsAPI";
 import { FunnelIcon } from "@heroicons/react/24/outline";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
+import SearchInput from "@/components/SearchInput"; // We'll create this below
+import FilterDropdown from "@/components/FilterDropdown";
+import { stringify } from "querystring";
 
 interface BlogsPageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -10,70 +13,74 @@ interface BlogsPageProps {
 
 const BlogsPage = async ({ searchParams }: BlogsPageProps) => {
   const fetchedparams = await searchParams;
-  const currentPage = Number(fetchedparams?.page);
+
+  // 1. Extract values. If they come as arrays from Next.js, join them to a string
+  const query = (fetchedparams?.q as string) || "";
+  const sort = (fetchedparams?.sortOrder as string) === "DESC" ? "DESC" : "ASC";
+  const categoryQuery = Array.isArray(fetchedparams?.category)
+    ? fetchedparams.category.join(",")
+    : (fetchedparams?.category as string) || "";
+
+  const topicQuery = Array.isArray(fetchedparams?.topic)
+    ? fetchedparams.topic.join(",")
+    : (fetchedparams?.topic as string) || "";
+
+  // 2. Pagination Logic
+  const itemsPerPage = 5;
+  const currentPage = Number(fetchedparams?.page) || 1;
+  const offset = (currentPage - 1) * itemsPerPage;
+
+  // 3. Fetch Data from API
   const blogPostData = await getPostsAPI({
     lang: "en",
-    limit: 5,
-    offset: 0,
+    limit: itemsPerPage,
+    offset: offset,
     author_id: 0,
+    search: query,
+    topic: topicQuery, // Now passes "topic1,topic2"
+    category: categoryQuery, // Now passes "cat1,cat2"
+    sortOrder: sort,
   });
-  console.log(blogPostData);
-  const itemsPerPage = 5;
+  // console.log(blogPostData);
+  // This should ideally come from your API response (count total rows)
   const totalItems = 50;
 
-  // Example: fetch data for current page
-  const start = (currentPage - 1) * itemsPerPage;
-  const end = start + itemsPerPage;
-  const items = Array.from(
-    { length: totalItems },
-    (_, i) => `Item ${i + 1}`,
-  ).slice(start, end);
   return (
     <div className="m-2 lg:max-w-5xl">
-      <div className="flex w-full">
-        <div className="flex pl-4 pr-2 py-0.5 border overflow-hidden rounded-2xl">
-          <input
-            type="text"
-            className="appearance-none border-none outline-none bg-transparent w-36 sm:w-sm xl:w-lg"
-            placeholder="Search here"
-          />
-          <MagnifyingGlassIcon className="w-6 h-6" />
-        </div>
-        <div className="flex ml-4 items-center">
-          <p>Filter</p>
+      <div className="flex w-full items-center justify-between">
+        {/* Search Bar Component (Client Component) */}
+        <SearchInput initialValue={query} />
+        {/* 
+        <div className="flex ml-4 items-center cursor-pointer hover:text-blue-600 transition">
+          <p className="mr-1">Filter</p>
           <FunnelIcon className="w-6 h-6" />
-        </div>
+        </div> */}
+        <FilterDropdown />
       </div>
-      <h1 className="mt-2">Latest Post</h1>
-      <div></div>
-      <ul>
-        {blogPostData.map((blog: any) => (
-          <li key={blog.id}>
-            <BlogCard
-              id={blog.id}
-              slug={blog.slug}
-              published={blog.published}
-              language_code={blog.language_code}
-              title={blog.title}
-              excerpt={blog.excerpt}
-              topic={blog.topic}
-              meta_description={blog.meta_description}
-              meta_keywords={blog.meta_keywords}
-              cover_image={blog.cover_image}
-              cover_image_alt_tag={blog.cover_image_alt_tag}
-              created_at={blog.created_at}
-              updated_at={blog.updated_at}
-              author={blog.author}
-              categories={blog.categories}
-            />
-          </li>
-        ))}
+
+      <h1 className="mt-6 text-2xl font-bold">Latest Posts</h1>
+
+      <ul className="mt-4 space-y-4">
+        {blogPostData.length > 0 ? (
+          blogPostData.map((blog: any) => (
+            <li key={blog.id}>
+              <BlogCard {...blog} />
+            </li>
+          ))
+        ) : (
+          <p className="py-10 text-center text-gray-500">
+            No posts found matching your criteria.
+          </p>
+        )}
       </ul>
-      <Pagination
-        totalItems={totalItems}
-        itemsPerPage={itemsPerPage}
-        currentPage={currentPage}
-      />
+
+      <div className="mt-10">
+        <Pagination
+          totalItems={totalItems}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+        />
+      </div>
     </div>
   );
 };

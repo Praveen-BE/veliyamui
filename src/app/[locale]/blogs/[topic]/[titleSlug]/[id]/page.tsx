@@ -1,4 +1,6 @@
 import BlogSinlgePost from "@/components/BlogSinglePage";
+import CommentSection from "@/components/CommentSection";
+import RatingSection from "@/components/RatingComponent";
 import { getSingleBlogById } from "@/lib/post/getSingleBlogById";
 import React from "react";
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
@@ -40,7 +42,17 @@ const BlogPostPage = async ({ params }: PageProps) => {
   const { id, locale } = await params;
   const post = await getSingleBlogById({ id, lang: locale });
   // console.log(post);
-  return <BlogSinlgePost postData={post} />;
+  return (
+    <>
+      <BlogSinlgePost postData={post} />
+      <CommentSection postId={id} />
+      <RatingSection
+        postId={id}
+        avg_rating={post.avg_rating}
+        total_ratings={post.total_ratings}
+      />
+    </>
+  );
 };
 
 export default BlogPostPage;

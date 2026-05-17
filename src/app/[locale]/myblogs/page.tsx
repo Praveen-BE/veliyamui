@@ -31,6 +31,8 @@ interface MyBlogsData {
     email: string;
   };
   categories: number[] | any[];
+  avg_rating: number;
+  total_ratings: number;
 }
 
 interface BlogsPageProps {
@@ -107,6 +109,8 @@ const MyBlogsPage = ({ searchParams }: BlogsPageProps) => {
                 updated_at={post.updated_at}
                 author={post.author}
                 categories={post.categories}
+                avg_rating={post.avg_rating}
+                total_ratings={post.total_ratings}
               />
             </div>
           ))

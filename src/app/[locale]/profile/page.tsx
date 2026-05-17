@@ -3,9 +3,10 @@ import "dotenv/config";
 
 import React, { useState, useEffect, useContext } from "react";
 import { useAuth } from "@/context/UserContext"; // Adjust path as needed
-import { getUserProfileByToken } from "@/lib/profile/getProfile";
+
 import { useParams } from "next/navigation";
 import { usePathname, useRouter } from "@/navigation";
+import getProfile from "@/lib/profile/getProfile";
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 interface FormData {
   id: string;
@@ -67,7 +68,12 @@ export default function ProfilePage() {
       // Scenario B: User data is null (e.g., hard refresh), fetch from API
       else {
         try {
-          const res = await getUserProfileByToken({ lang }); // Your endpoint to get current user
+          const response = await fetch(`${API_URL}/profile/me/:${lang}`, {
+            method: "GET",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+          }); // Your endpoint to get current user
+          const res = await response.json();
           console.log(res);
           const data = res?.user;
           if (data) {

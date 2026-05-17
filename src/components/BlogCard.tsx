@@ -29,6 +29,8 @@ interface MyBlogsData {
     email: string;
   };
   categories: number[] | any[];
+  avg_rating: number;
+  total_ratings: number;
 }
 
 const BlogCard = ({
@@ -47,6 +49,8 @@ const BlogCard = ({
   updated_at,
   author,
   categories,
+  avg_rating,
+  total_ratings,
 }: MyBlogsData) => {
   return (
     <div
@@ -73,8 +77,9 @@ const BlogCard = ({
             <li>Jan 20, 2020</li>
             <li>5 min Read</li>
             <li className="flex items-center">
-              <p>Rating-5</p>
+              <p>{avg_rating}</p>
               <StarIcon className="w-4 h-4 md:w-5 md:h-5 fill-amber-300" />
+              <span>{`(${total_ratings})`}</span>
             </li>
           </ul>
           <p className="text-[16px] sm:text-lg line-clamp-4">{excerpt}</p>
@@ -122,6 +127,8 @@ export const MyBlogCard = ({
   updated_at,
   author,
   categories,
+  avg_rating,
+  total_ratings,
 }: MyBlogsData) => {
   console.log("Single Post");
   console.log(id);
@@ -143,6 +150,8 @@ export const MyBlogCard = ({
         updated_at={updated_at}
         author={author}
         categories={categories}
+        avg_rating={avg_rating}
+        total_ratings={total_ratings}
       />
       <ul className="absolute bg-textPrimary right-2 sm:right-4 top-[50%] -translate-y-[50%] py-4 px-2 rounded-3xl flex flex-col gap-6">
         <CTAButton

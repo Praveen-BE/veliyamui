@@ -25,6 +25,8 @@ interface MyBlogsData {
     email: string;
   };
   categories: number[] | any[];
+  avg_rating: number;
+  total_ratings: number;
 }
 
 export async function getMyBlogsData({
