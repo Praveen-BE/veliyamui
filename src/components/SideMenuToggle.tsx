@@ -1,9 +1,11 @@
 "use client";
 import SideBarNavButton from "@/ui/SideBarNavButton";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 const SideMenuToggle = () => {
+  const t = useTranslations("Footer");
   const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
     <>
@@ -15,13 +17,13 @@ const SideMenuToggle = () => {
         )}
       </button>
       {isOpen && (
-        <div className="absolute flex flex-col bg-ctaSecondary p-4 gap-1 w-52 right-0 top-16">
-          <SideBarNavButton navName="Home" navLinkName="" />
-          <SideBarNavButton navName="Blogs" navLinkName="blogs" />
-          <SideBarNavButton navName="My Blogs" navLinkName="myblogs" />
-          <SideBarNavButton navName="Profile" navLinkName="profile" />
-          <SideBarNavButton navName="Contact" navLinkName="contact" />
-          <SideBarNavButton navName="About Us" navLinkName="about" />
+        <div className="absolute flex flex-col bg-ctaSecondary p-4 gap-1 w-64 right-0 top-16 z-10">
+          <SideBarNavButton navName={t("home")} navLinkName="" />
+          <SideBarNavButton navName={t("blogs")} navLinkName="blogs" />
+          <SideBarNavButton navName={t("myBlogs")} navLinkName="myblogs" />
+          <SideBarNavButton navName={t("profile")} navLinkName="profile" />
+          <SideBarNavButton navName={t("contact")} navLinkName="contact" />
+          <SideBarNavButton navName={t("aboutUs")} navLinkName="about" />
         </div>
       )}
     </>

@@ -15,15 +15,14 @@ import SideMenuToggle from "./SideMenuToggle";
 
 const Header = async ({ lang }: { lang: string }) => {
   const user = await getProfile({ lang: lang });
-  console.log("User Data :-" + user);
-  const t = await getTranslations("HomePage");
+  const t = await getTranslations("Header");
   return (
     <div className="w-full h-16 px-2 bg-primary flex justify-between items-center">
       {lang == "ta" ? (
         <Image
           className="w-20 h-12 md:w-28 md:h-20"
           src={VeliyamTamilLogo}
-          alt="Veliyam English Logo"
+          alt="Veliyam Tamil Logo"
         />
       ) : (
         <Image
@@ -33,14 +32,14 @@ const Header = async ({ lang }: { lang: string }) => {
         />
       )}
       <div className="hidden md:flex gap-4">
-        <NavButton navName="Home" navLinkName="" />
-        <NavButton navName="Blogs" navLinkName="blogs" />
-        <NavButton navName="My Blogs" navLinkName="myblogs" />
+        <NavButton navName={t("home")} navLinkName="" />
+        <NavButton navName={t("blogs")} navLinkName="blogs" />
+        <NavButton navName={t("myBlogs")} navLinkName="myblogs" />
       </div>
       <Language />
       {/* <ThemeToggle /> */}
       <div className="flex items-center gap-3">
-        <CTAButton ctaName="Create" ctaLinkName="myblogs/create" />
+        <CTAButton ctaName={t("create")} ctaLinkName="myblogs/create" />
         <NavProfileOrNavAuth initialUser={user} />
         <SideMenuToggle />
       </div>

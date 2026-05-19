@@ -3,14 +3,18 @@
     "create": "Create",
     "home": "Home",
     "blogs": "Blogs",
-    "myBlogs": "My Blogs"
+    "myBlogs": "My Blogs",
+    "signup": "Sign Up"
   },
   "Footer": {
     "home": "Home",
     "blogs": "Blogs",
     "myBlogs": "My Blogs",
     "aboutUs": "About Us",
-    "contact": "Contact"
+    "profile": "Profile",
+    "contact": "Contact",
+    "privacy": "Privacy Policy",
+    "copyright": "Copyright © 2026 | All rights reserved"
   },
   "HomePage": {
     "heroSlogan": "Stories that shape wisdom, voices that spark change.",

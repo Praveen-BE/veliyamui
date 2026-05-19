@@ -5,9 +5,11 @@ import Link from "next/link";
 import Image from "next/image";
 import { useAuth } from "@/context/UserContext";
 import NotInterestSetProfile from "../../public/dont inteterst to set profile1.svg";
+import { useTranslations } from "next-intl";
 
 // We receive initialUser from the Server Component
 const NavProfileOrNavAuth = ({ initialUser }: any) => {
+  const t = useTranslations("Header");
   const { user, setUser } = useAuth();
 
   // "Hydrate" the global context with the server data
@@ -35,7 +37,7 @@ const NavProfileOrNavAuth = ({ initialUser }: any) => {
           href="/auth"
           className="px-2 py-0.5 border-2 border-ctaSecondary text-textPrimary text-sm sm:text-xl rounded-tl-3xl rounded-br-2xl"
         >
-          Signup
+          {t("signup")}
         </Link>
       )}
     </>
