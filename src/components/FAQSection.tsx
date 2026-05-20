@@ -7,12 +7,14 @@ const FAQSection = () => {
   const t = useTranslations("HomePage");
   return (
     <div className="my-4">
-      <h1 className="font-bold text-2xl sm:text-3xl text-center">FAQs</h1>
+      <h1 className="font-bold text-2xl sm:text-3xl text-center">
+        {t("faqs")}
+      </h1>
       <FAQElement question={t("faq1Question")} answer={t("faq1Answer")} />
       <FAQElement question={t("faq2Question")} answer={t("faq2Answer")} />
       <FAQElement question={t("faq3Question")} answer={t("faq3Answer")} />
       <div className="mt-6 flex justify-center">
-        <CTAOutlineButton ctaName="Any You Have" ctaLinkName="/faqs" />
+        <CTAOutlineButton ctaName={t("anyyouhave")} ctaLinkName="/faqs" />
       </div>
     </div>
   );

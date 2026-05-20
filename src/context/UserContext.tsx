@@ -2,13 +2,15 @@ import { createContext, useContext, Dispatch, SetStateAction } from "react";
 
 // Define the shape of your User object
 export interface User {
-  id: string;
-  email: string;
-  role: string;
-  display_name: string;
-  bio: string;
-  language_code: string;
-  created_at: string;
+  user: {
+    id: string;
+    email: string;
+    role: string;
+    display_name: string;
+    bio: string;
+    language_code: string;
+    created_at: string;
+  };
 }
 
 // Define the shape of the Context Value

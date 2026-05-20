@@ -1,4 +1,6 @@
 "use client";
+import { useAuth } from "@/context/UserContext";
+import { authLogoutAPI } from "@/lib/auth/authLogoutAPI";
 import SideBarNavButton from "@/ui/SideBarNavButton";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import { useTranslations } from "next-intl";
@@ -7,6 +9,11 @@ import { useState } from "react";
 const SideMenuToggle = () => {
   const t = useTranslations("Footer");
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { setUser } = useAuth();
+  const logoutAPI = async () => {
+    await authLogoutAPI();
+    setUser(null);
+  };
   return (
     <>
       <button onClick={() => setIsOpen(!isOpen)}>
@@ -24,6 +31,12 @@ const SideMenuToggle = () => {
           <SideBarNavButton navName={t("profile")} navLinkName="profile" />
           <SideBarNavButton navName={t("contact")} navLinkName="contact" />
           <SideBarNavButton navName={t("aboutUs")} navLinkName="about" />
+          <button
+            className="text-2xl bg-red-500 text-white"
+            onClick={logoutAPI}
+          >
+            Logout
+          </button>
         </div>
       )}
     </>

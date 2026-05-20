@@ -11,7 +11,7 @@ import { useTranslations } from "next-intl";
 const NavProfileOrNavAuth = ({ initialUser }: any) => {
   const t = useTranslations("Header");
   const { user, setUser } = useAuth();
-
+  console.log("Header User :-" + `${user ? user?.user?.id : ""}`);
   // "Hydrate" the global context with the server data
   useEffect(() => {
     if (initialUser) {

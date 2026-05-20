@@ -2,7 +2,7 @@
 import { useAuth } from "@/context/UserContext";
 import { authLoginAPI } from "@/lib/auth/authLoginAPI";
 import { authSignupAPI } from "@/lib/auth/authSignupAPI";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useRef, useState } from "react";
 
 const AuthPage = () => {
@@ -13,6 +13,7 @@ const AuthPage = () => {
   const confirmPassword = useRef<HTMLInputElement>(null);
   const { locale } = useParams();
   const { user, setUser } = useAuth();
+  const route = useRouter();
 
   const normalizedLocale = Array.isArray(locale) ? locale[0] : locale; // ensure string
   const loginSubmit = async () => {
@@ -21,7 +22,9 @@ const AuthPage = () => {
       password: password.current?.value,
       language_code: normalizedLocale,
     });
-    setUser(res?.user ?? null);
+    // console.log(res?.user);
+    setUser(res ?? null);
+    route.push("/");
   };
   const signupSubmit = async () => {
     const res = await authSignupAPI({
@@ -30,8 +33,10 @@ const AuthPage = () => {
       password: password.current?.value,
       language_code: normalizedLocale,
     });
-    setUser(res?.user ?? null);
+    setUser(res ?? null);
+    route.push("/");
   };
+  console.log(user);
   return (
     <div className="flex flex-1 justify-center items-center">
       <div className="mt-4 w-[360] sm:w-xl h-fit flex flex-col bg-primary items-center gap-4 shadow-2xl rounded-2xl">

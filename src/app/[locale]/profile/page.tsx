@@ -49,20 +49,20 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(false);
 
   const lang = `${locale}`;
-
+  console.log(user);
   // 1. Initial Fetch/Sync Logic
   useEffect(() => {
     const initializeProfile = async () => {
       // Scenario A: User data exists in context, sync it to form
       if (user) {
         setFormData({
-          id: user.id || "",
-          email: user.email || "",
-          role: user.role || "",
-          display_name: user.display_name || "",
-          bio: user.bio || "",
-          language_code: user.language_code || "",
-          created_at: user.created_at || "",
+          id: user?.user?.id || "",
+          email: user?.user?.email || "",
+          role: user?.user.role || "",
+          display_name: user?.user.display_name || "",
+          bio: user?.user?.bio || "",
+          language_code: user?.user?.language_code || "",
+          created_at: user?.user?.created_at || "",
         });
       }
       // Scenario B: User data is null (e.g., hard refresh), fetch from API
@@ -73,9 +73,14 @@ export default function ProfilePage() {
             credentials: "include",
             headers: { "Content-Type": "application/json" },
           }); // Your endpoint to get current user
-          const res = await response.json();
-          console.log(res);
-          const data = res?.user;
+          if (!response.ok) {
+            setUser(null);
+            router.push("/auth");
+            return;
+          }
+          const data = await response.json();
+          console.log(data);
+          // const data = res?.user;
           if (data) {
             setUser(data); // Update context
             setFormData({
@@ -88,7 +93,6 @@ export default function ProfilePage() {
               created_at: data.created_at || "",
             });
           }
-          // console.log("empty data :- " + data);
         } catch (err) {
           console.error("Failed to fetch initial user data", err);
         }
@@ -96,7 +100,7 @@ export default function ProfilePage() {
     };
 
     initializeProfile();
-  }, [user, setUser]); // Runs on mount and if user context updates
+  }, [user]); // Runs on mount and if user context updates
 
   const switchLocale = (newLocale: string) => {
     router.replace(pathname, { locale: newLocale });
@@ -114,18 +118,18 @@ export default function ProfilePage() {
       });
 
       if (response.ok) {
-        const userData: UserProfile = await response.json();
+        const data: UserProfile = await response.json();
         // Update global context
-        const data = userData?.user;
+        // const data = userData?.user;
         setUser(data);
         setFormData({
-          id: data.id || "",
-          email: data.email || "",
-          role: data.role || "",
-          display_name: data.display_name || "",
-          bio: data.bio || "",
-          language_code: data.language_code || "",
-          created_at: data.created_at || "",
+          id: data?.user?.id || "",
+          email: data?.user?.email || "",
+          role: data?.user?.role || "",
+          display_name: data?.user?.display_name || "",
+          bio: data?.user?.bio || "",
+          language_code: data?.user?.language_code || "",
+          created_at: data?.user?.created_at || "",
         });
         setIsEditing(false);
       } else {

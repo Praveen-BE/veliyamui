@@ -10,7 +10,7 @@ const HeroSection = async () => {
     <section className="flex flex-col md:flex-row gap-4 px-4 pt-4 pb-4">
       <div className="flex flex-col gap-4 md:w-6/12">
         <h1 className="font-bold text-2xl text-center">"{t("heroSlogan")}"</h1>
-        <p className="font-normal text-lg text-justify">
+        <p className="font-normal text-justify">
           &nbsp;&nbsp;&nbsp;&nbsp; {t("heroDescription")}
         </p>
         <div className="flex justify-center">

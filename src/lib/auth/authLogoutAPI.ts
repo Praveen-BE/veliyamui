@@ -10,17 +10,17 @@ export async function authLogoutAPI(): Promise<void> {
   try {
     const res = await fetch(`${API_URL}/auth/logout`, {
       method: "POST",
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
     });
 
     if (!res.ok) throw new Error("Failed to logout");
-
     // Remove token from browser storage
-    if (typeof window !== "undefined") {
-      localStorage.removeItem("token");
-    }
+    // if (typeof window !== "undefined") {
+    //   localStorage.removeItem("token");
+    // }
   } catch (error) {
     console.error("Error logging out:", error);
   }

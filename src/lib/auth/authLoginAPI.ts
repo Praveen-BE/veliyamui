@@ -30,6 +30,7 @@ export async function authLoginAPI({
   password,
   language_code,
 }: LoginCredentials): Promise<LoginResponse | null> {
+  console.log(email, password, language_code);
   try {
     const res = await fetch(`${API_URL}/auth/login`, {
       method: "POST",

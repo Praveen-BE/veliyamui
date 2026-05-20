@@ -15,6 +15,7 @@ import SideMenuToggle from "./SideMenuToggle";
 
 const Header = async ({ lang }: { lang: string }) => {
   const user = await getProfile({ lang: lang });
+  // console.log(user);
   const t = await getTranslations("Header");
   return (
     <div className="w-full h-16 px-2 bg-primary flex justify-between items-center">
@@ -39,7 +40,11 @@ const Header = async ({ lang }: { lang: string }) => {
       <Language />
       {/* <ThemeToggle /> */}
       <div className="flex items-center gap-3">
-        <CTAButton ctaName={t("create")} ctaLinkName="myblogs/create" />
+        {user
+          ? (user.user.role == "creator" || user.user.role == "admin") && (
+              <CTAButton ctaName={t("create")} ctaLinkName="myblogs/create" />
+            )
+          : ""}
         <NavProfileOrNavAuth initialUser={user} />
         <SideMenuToggle />
       </div>

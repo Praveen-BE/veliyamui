@@ -17,18 +17,19 @@
     "copyright": "பதிப்புரிமை © 2026 | அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை"
   },
   "HomePage": {
-    "title": "வணக்கம் உலகம்",
-    "description": "வரவேற்கிறேன்",
-    "heroSlogan": "Stories that shape wisdom, voices that spark change.",
-    "heroDescription": "Veliyam is where timeless Tamil thought meets global ideas. Explore blogs that blend culture, creativity, and technology into narratives worth sharing.",
-    "heroCTAcontent": "Ready to discover insights that matter? Click below and begin your journey…",
-    "heroCTAButtonName": "Explore",
-    "faq1Question": "What kind of blogs does Veliyam publish?",
-    "faq1Answer": "Veliyam focuses on culture, creativity, technology, and storytelling — blending Tamil wisdom with global perspectives.",
-    "faq2Question": "Is Veliyam content multilingual?",
-    "faq2Answer": "Yes. Our blogs are designed with multilingual support so readers can enjoy content in Tamil, English, and other languages.",
-    "faq3Question": "Can I contribute to Veliyam?",
-    "faq3Answer": "Absolutely. We welcome guest writers and collaborators who share our vision of meaningful storytelling.",
-    "bottomCTAcontent": "Don’t just read — experience. Veliyam is more than blogs; it’s a journey into ideas. Click explore and see where wisdom meets creativity."
+    "heroSlogan": "அறிவை வளர்க்கும் கதைகள், மாற்றத்தை விதைக்கும் குரல்கள்.",
+    "heroDescription": "வெளியம் (Veliyam) என்பது காலத்தைக் கடந்த தமிழ் சிந்தனைகளும், உலகளாவிய கருத்துகளும் சங்கமிக்கும் இடம். கலாச்சாரம், படைப்பாற்றல் மற்றும் தொழில்நுட்பம் ஆகியவற்றை உள்ளடக்கிய பயனுள்ள வலைப்பதிவுகளை இங்கே கண்டறியுங்கள்.",
+    "heroCTAcontent": "முக்கியத்துவம் வாய்ந்த நுண்ணறிவுகளைக் கண்டறியத் தயாரா? கீழே கிளிக் செய்து உங்கள் பயணத்தைத் தொடங்குங்கள்...",
+    "heroCTAButtonName": "ஆராய்க",
+    "faqs": "பொதுவான கேள்விகள்",
+    "faq1Question": "வெளியம் என்ன வகையான வலைப்பதிவுகளை வெளியிடுகிறது?",
+    "faq1Answer": "வெளியம் முக்கியமாக கலாச்சாரம், படைப்பாற்றல், தொழில்நுட்பம் மற்றும் கதைசொல்லல் ஆகியவற்றில் கவனம் செலுத்துகிறது — தமிழ் அறிவை உலகளாவிய பார்வைகளுடன் இணைக்கிறது.",
+    "faq2Question": "வெளியம் உள்ளடக்கங்கள் பன்மொழி வடிவில் இருக்குமா?",
+    "faq2Answer": "ஆம். வாசகர்கள் தமிழ், ஆங்கிலம் மற்றும் பிற மொழிகளில் உள்ளடக்கங்களை ரசிப்பதற்காக, எங்களது வலைப்பதிவுகள் பன்மொழி ஆதரவுடன் வடிவமைக்கப்பட்டுள்ளன.",
+    "faq3Question": "நான் வெளியம் தளத்தில் எழுத முடியுமா?",
+    "faq3Answer": "நிச்சயமாக. அர்த்தமுள்ள கதைசொல்லல் குறித்த எங்களது தொலைநோக்குப் பார்வையைப் பகிர்ந்து கொள்ளும் விருந்தினர் எழுத்தாளர்களையும், பங்களிப்பாளர்களையும் நாங்கள் வரவேற்கிறோம்.",
+    "anyyouhave": "உங்களுக்கு ஏதேனும்..",
+    "outexpertrating": "எங்களது நிபுணர்களின் மதிப்பீடுகள்",
+    "bottomCTAcontent": "வெறும் வாசிப்புடன் நின்றுவிடாதீர்கள் — அனுபவியுங்கள். வெளியம் என்பது வெறும் வலைப்பதிவுகள் மட்டுமல்ல; அது கருத்துகளின் வழியே ஒரு பயணம். 'ஆராய்க' என்பதைக் கிளிக் செய்து, அறிவும் படைப்பாற்றலும் எங்கே இணைகின்றன என்று பாருங்கள்."
   }
 }

@@ -18,8 +18,8 @@ export default async function Home() {
         {/* FAQ section */}
         <FAQSection />
         {/* Testimonials */}
-        <p className="text-xl text-center sm:text-2xl text-textPrimary font-medium mt-4 pl-6">
-          Our Experts Ratings
+        <p className="text-xl text-center sm:text-2xl text-textPrimary font-bold mt-6 pl-6">
+          {t("outexpertrating")}
         </p>
         <TestimonialSection />
         {/* bottom CTA content */}
@@ -29,7 +29,10 @@ export default async function Home() {
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {t("bottomCTAcontent")}
           </p>
           <div className="text-center mb-8">
-            <CTAdarkRoastButton ctaName="Explore" ctaLinkName="blogs" />
+            <CTAdarkRoastButton
+              ctaName={t("heroCTAButtonName")}
+              ctaLinkName="blogs"
+            />
           </div>
         </div>
       </div>

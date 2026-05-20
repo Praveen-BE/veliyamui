@@ -11,6 +11,19 @@
   --spacing-base: 1rem;
 }
 
+/* Default English styles */
+body {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+/* Tamil specific overrides */
+html:lang(ta) body {
+  font-size: 14.5px; /* Slightly smaller to match English visual weight */
+  line-height: 1.8; /* Extra breathing room for ascenders/descenders */
+  letter-spacing: 0.02em; /* Adds slight spacing for better legibility */
+}
+
 /* When the system is in dark mode, override the variable */
 /* @media (prefers-color-scheme: dark) {
   :root {
