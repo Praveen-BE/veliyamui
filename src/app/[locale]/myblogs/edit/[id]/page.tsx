@@ -1,5 +1,4 @@
 "use client";
-import "dotenv/config";
 import React, { useEffect, useState } from "react";
 import ImageUpload from "../../../../../components/CoverImageUpload";
 import { CatagoriesListData } from "@/utils/constant";
@@ -11,8 +10,6 @@ import { SerializedEditorState, SerializedLexicalNode } from "lexical";
 import { saveBlogPostLexicalJsonAndContent } from "@/lib/editor/saveLexicalJson&Content";
 import { saveSeoContentAndCategories } from "@/lib/editor/saveSeoAndCategories";
 import { updatePublishAPI } from "@/lib/editor/updatePublishAPI";
-
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
 export interface GalleryImage {
   id: string | number;
@@ -178,9 +175,7 @@ const EditPage = () => {
       publish: !postData.published,
       lang: postData.language_code,
     });
-    console.log(res);
   };
-  console.log(postData);
 
   return (
     <div className="flex flex-col py-2 px-4">

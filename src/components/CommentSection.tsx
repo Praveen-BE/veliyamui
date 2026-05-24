@@ -1,11 +1,13 @@
 "use client";
 
+import "dotenv/config";
 import React, { useState, useContext, FormEvent } from "react";
 import { UserContext } from "@/context/UserContext";
 import ReportButton from "@/ui/ReportButton";
 import CommentCard from "./CommentCard";
 import useSWR from "swr";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 // --- Types ---
 
 export interface Comment {
@@ -47,15 +49,11 @@ export default function CommentSection({ postId }: CommentSectionProps) {
     data: comments = [],
     isLoading,
     mutate,
-  } = useSWR<Comment[]>(
-    `http://localhost:5000/api/comments/${postId}`,
-    fetchComments,
-    {
-      revalidateOnFocus: false, // Don't re-fetch when tab regains focus
-      revalidateOnReconnect: false, // Don't re-fetch on network reconnect
-      dedupingInterval: 30000, // Cache for 30s — blocks any duplicate calls within window
-    },
-  );
+  } = useSWR<Comment[]>(`${API_URL}/comments/${postId}`, fetchComments, {
+    revalidateOnFocus: false, // Don't re-fetch when tab regains focus
+    revalidateOnReconnect: false, // Don't re-fetch on network reconnect
+    dedupingInterval: 30000, // Cache for 30s — blocks any duplicate calls within window
+  });
 
   // Handles both top-level comments and replies
   async function handleSubmit(
@@ -66,7 +64,7 @@ export default function CommentSection({ postId }: CommentSectionProps) {
     setSubmitting(true);
 
     try {
-      const res = await fetch(`http://localhost:5000/api/comments/${postId}`, {
+      const res = await fetch(`${API_URL}/comments/${postId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -104,13 +102,10 @@ export default function CommentSection({ postId }: CommentSectionProps) {
     if (!confirm("Delete this comment?")) return;
 
     try {
-      const res = await fetch(
-        `http://localhost:5000/api/comments/${commentId}`,
-        {
-          method: "DELETE",
-          credentials: "include",
-        },
-      );
+      const res = await fetch(`${API_URL}/comments/${commentId}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
 
       if (res.ok) {
         // ✅ Optimistically remove from SWR cache — no extra GET needed after DELETE

@@ -7,7 +7,7 @@ import { useAuth } from "@/context/UserContext"; // Adjust path as needed
 import { useParams } from "next/navigation";
 import { usePathname, useRouter } from "@/navigation";
 import getProfile from "@/lib/profile/getProfile";
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 interface FormData {
   id: string;
   email: string;
@@ -49,7 +49,6 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(false);
 
   const lang = `${locale}`;
-  console.log(user);
   // 1. Initial Fetch/Sync Logic
   useEffect(() => {
     const initializeProfile = async () => {
@@ -79,7 +78,6 @@ export default function ProfilePage() {
             return;
           }
           const data = await response.json();
-          console.log(data);
           // const data = res?.user;
           if (data) {
             setUser(data); // Update context

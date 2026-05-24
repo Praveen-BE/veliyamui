@@ -9,7 +9,7 @@ import { useState } from "react";
 const SideMenuToggle = () => {
   const t = useTranslations("Footer");
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { setUser } = useAuth();
+  const { user, setUser } = useAuth();
   const logoutAPI = async () => {
     await authLogoutAPI();
     setUser(null);
@@ -27,11 +27,15 @@ const SideMenuToggle = () => {
         <div className="absolute flex flex-col bg-ctaSecondary p-4 gap-1 w-64 right-0 top-16 z-10">
           <SideBarNavButton navName={t("home")} navLinkName="" />
           <SideBarNavButton navName={t("blogs")} navLinkName="blogs" />
-          <SideBarNavButton
-            navName={t("create")}
-            navLinkName="myblogs/create"
-          />
-          <SideBarNavButton navName={t("myBlogs")} navLinkName="myblogs" />
+          {(user?.user.role === "creator" || user?.user.role === "admin") && (
+            <SideBarNavButton
+              navName={t("create")}
+              navLinkName="myblogs/create"
+            />
+          )}
+          {(user?.user.role === "creator" || user?.user.role === "admin") && (
+            <SideBarNavButton navName={t("myBlogs")} navLinkName="myblogs" />
+          )}
           <SideBarNavButton navName={t("profile")} navLinkName="profile" />
           <SideBarNavButton navName={t("contact")} navLinkName="contact" />
           <SideBarNavButton navName={t("aboutUs")} navLinkName="about" />

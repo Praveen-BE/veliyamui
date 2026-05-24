@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { FunnelIcon } from "@heroicons/react/24/outline";
 import { useState, useEffect } from "react";
 import { XMarkIcon } from "@heroicons/react/24/solid";
+import { CatagoriesListData } from "@/utils/constant";
 
 export default function FilterDropdown() {
   const router = useRouter();
@@ -149,17 +150,17 @@ export default function FilterDropdown() {
           {/* Categories Section */}
           <div className="mb-6">
             <p className="font-bold mb-2">Categories</p>
-            {["technology", "javascript", "ai"].map((slug) => (
+            {CatagoriesListData.map((cata) => (
               <label
-                key={slug}
+                key={cata.id}
                 className="flex items-center space-x-2 mb-1 cursor-pointer"
               >
                 <input
                   type="checkbox"
-                  checked={tempFilters.category.includes(slug)}
-                  onChange={() => handleLocalChange("category", slug)}
+                  checked={tempFilters.category.includes(cata.slug)}
+                  onChange={() => handleLocalChange("category", cata.slug)}
                 />
-                <span className="capitalize">{slug}</span>
+                <span className="capitalize">{cata.name}</span>
               </label>
             ))}
           </div>

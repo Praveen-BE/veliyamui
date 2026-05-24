@@ -1,9 +1,10 @@
 "use client";
+import "dotenv/config";
 import Image from "next/image";
 import React, { useState, useRef, JSX, useEffect } from "react";
 import BlogImage from "../../public/blogsherosectionimage.jpg";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export default function ImageUpload({
   post_id,
@@ -69,7 +70,6 @@ export default function ImageUpload({
     setUploading(true);
 
     try {
-      console.log("Upload hit in frontend");
       const formData = new FormData();
       formData.append("file", file);
       formData.append("postId", `${post_id}`); // no need to JSON.stringify
@@ -78,17 +78,16 @@ export default function ImageUpload({
       if (imgAlt) {
         formData.append("cover_image_alt_tag", imgAlt);
       } else {
-        console.log("image Alt Text not Available");
+        // console.log("image Alt Text not Available");
       }
 
-      const res = await fetch("http://localhost:5000/api/images/upload", {
+      const res = await fetch(`${API_URL}/images/upload`, {
         method: "POST",
         body: formData,
         credentials: "include",
       });
 
       const data = await res.json();
-      console.log(data);
 
       // Update state with response
       setPreviewUrl(data.url);
@@ -98,12 +97,6 @@ export default function ImageUpload({
       setUploading(false);
     }
   };
-
-  console.log(imgAlt);
-  console.log(imgUrl);
-
-  console.log(previewUrl);
-  console.log(imgAlt);
 
   return (
     <div className="flex flex-col items-center justify-center bg-primary p-4">

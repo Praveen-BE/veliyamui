@@ -1,3 +1,5 @@
+import "dotenv/config";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 interface PostUserRatingResponse {
   message: string;
   avgRating: number;
@@ -11,7 +13,7 @@ export default async function postUserRatingPostAPI({
   postId: number | string;
   selectedRating: number;
 }): Promise<PostUserRatingResponse | null | undefined> {
-  const response = await fetch(`http://localhost:5000/api/rating/${postId}`, {
+  const response = await fetch(`${API_URL}/rating/${postId}`, {
     method: "POST",
     credentials: "include",
     headers: {

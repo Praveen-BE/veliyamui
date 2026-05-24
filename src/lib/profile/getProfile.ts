@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { cookies } from "next/headers";
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 interface UserProfile {
   user: {
@@ -21,7 +21,6 @@ export default async function getProfile({
 }): Promise<UserProfile | null> {
   const cookieStore = await cookies();
   const token = cookieStore.get("token");
-  // console.log(token?.value);
   if (!token?.value) return null;
 
   try {

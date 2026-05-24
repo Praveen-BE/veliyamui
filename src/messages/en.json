@@ -18,6 +18,7 @@
     "copyright": "Copyright © 2026 | All rights reserved"
   },
   "HomePage": {
+    "title": "Veliyam",
     "heroSlogan": "Stories that shape wisdom, voices that spark change.",
     "heroDescription": "Veliyam is where timeless Tamil thought meets global ideas. Explore blogs that blend culture, creativity, and technology into narratives worth sharing.",
     "heroCTAcontent": "Ready to discover insights that matter? Click below and begin your journey…",
@@ -32,5 +33,9 @@
     "anyyouhave": "Any You Have",
     "outexpertrating": "Our Experts Ratings",
     "bottomCTAcontent": "Don’t just read — experience. Veliyam is more than blogs; it’s a journey into ideas. Click explore and see where wisdom meets creativity."
+  },
+  "BlogPage": {
+    "title": "Insights, Ideas, and Inspirations",
+    "description": "Dive into Veliyam’s blog space — a collection of thought‑provoking articles that explore culture, creativity, and technology. Discover perspectives that connect Tamil wisdom with global conversations."
   }
 }

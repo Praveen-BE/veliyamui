@@ -22,7 +22,6 @@ const AuthPage = () => {
       password: password.current?.value,
       language_code: normalizedLocale,
     });
-    // console.log(res?.user);
     setUser(res ?? null);
     route.push("/");
   };
@@ -36,7 +35,6 @@ const AuthPage = () => {
     setUser(res ?? null);
     route.push("/");
   };
-  console.log(user);
   return (
     <div className="flex flex-1 justify-center items-center">
       <div className="mt-4 w-[360] sm:w-xl h-fit flex flex-col bg-primary items-center gap-4 shadow-2xl rounded-2xl">

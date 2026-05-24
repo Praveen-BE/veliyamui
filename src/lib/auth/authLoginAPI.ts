@@ -1,7 +1,6 @@
 import "dotenv/config";
 
-const API_URL: string =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 interface LoginCredentials {
   email?: string;
@@ -30,7 +29,6 @@ export async function authLoginAPI({
   password,
   language_code,
 }: LoginCredentials): Promise<LoginResponse | null> {
-  console.log(email, password, language_code);
   try {
     const res = await fetch(`${API_URL}/auth/login`, {
       method: "POST",

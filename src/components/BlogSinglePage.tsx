@@ -302,41 +302,45 @@ interface BlogSinglePostProps {
 
 export const BlogSinglePost = ({ postData }: BlogSinglePostProps) => {
   return (
-    <main style={{ maxWidth: "800px", margin: "0 auto", padding: "20px" }}>
-      {/* Title & Author */}
-      <h1 className="text-2xl font-semibold">{postData.title}</h1>
-      <p>
-        By:{" "}
-        <span className="text-green-600">
-          {postData.author?.name ?? "Unknown Author"}
-        </span>
-      </p>
-      <ul className="flex gap-6">
-        <p>Topic: {postData.topic.name}</p>
-        <ul className="flex items-center">
-          <p>Rating: {`${postData.avg_rating}`}</p>
-          <StarIcon fill="orange" className="w-4 h-4" />{" "}
-          <p> {`(${postData.total_ratings})`}</p>
+    <main className="mx-0 my-auto p-5">
+      <div className="relative">
+        {/* Title & Author */}
+        <h1 className="text-4xl sm:text-5xl md:text-7xl font-semibold capitalize">
+          {postData.title}
+        </h1>
+        <p className="text-xl sm:text-2xl">
+          By:{" "}
+          <span className="text-green-600">
+            {postData.author?.name ?? "Unknown Author"}
+          </span>
+        </p>
+        <ul className="flex flex-col md:flex-row md:justify-between text-lg sm:text-xl md:text-2xl">
+          <p>Topic: {postData.topic.name}</p>
+          <ul className="flex items-center">
+            <p>Rating: {`${postData.avg_rating}`}</p>
+            <StarIcon fill="orange" className="w-4 h-4" />{" "}
+            <p> {`(${postData.total_ratings})`}</p>
+          </ul>
         </ul>
-      </ul>
-
-      {/* Cover image — only render if a URL is present */}
-      {/* {postData.cover_image && (
+        {/* Cover image — only render if a URL is present */}
+        {/* {postData.cover_image && (
         <Image
           width="100"
           height="100"
           src={postData.cover_image}
           alt={postData.cover_image_alt_tag ?? postData.title}
-          style={{ width: "100%", borderRadius: "10px", display: "block" }}
+          className="w-full rounded-xl block"
         />
       )} */}
-      <Image
-        width="100"
-        height="100"
-        src={sampleCoverImage}
-        alt={"Sample Cover Image"}
-        style={{ width: "100%", borderRadius: "10px", display: "block" }}
-      />
+
+        <Image
+          width="100"
+          height="100"
+          src={sampleCoverImage}
+          alt={"Sample Cover Image"}
+          className="w-full max-h-100 rounded-xl object-cover"
+        />
+      </div>
 
       <hr style={{ margin: "24px 0" }} />
 

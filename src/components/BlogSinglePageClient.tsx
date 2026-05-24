@@ -31,7 +31,6 @@ const BlogSinglePageClient = ({
           total_ratings={total_ratings}
         />
       </LazyLoad>
-
       <LazyLoad fallback={<div className="h-40 animate-pulse bg-gray-100" />}>
         <CommentSection postId={id} />
       </LazyLoad>

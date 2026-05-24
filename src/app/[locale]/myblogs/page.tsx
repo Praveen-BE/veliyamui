@@ -69,7 +69,7 @@ const MyBlogsPage = ({ searchParams }: BlogsPageProps) => {
   }, []);
 
   return (
-    <div className="m-2 lg:max-w-5xl">
+    <div className="m-2 flex-1 lg:max-w-5xl">
       {/* <div className="flex w-full">
         <div className="flex pl-4 pr-2 py-0.5 border overflow-hidden rounded-2xl">
           <input

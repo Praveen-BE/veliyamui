@@ -4,8 +4,6 @@ import BlogSinglePageClient from "@/components/BlogSinglePageClient";
 // import RatingSection from "@/components/RatingComponent";
 import { getSingleBlogById } from "@/lib/post/getSingleBlogById";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
-
 interface RouteParams {
   locale: string;
   category: string;
@@ -27,6 +25,16 @@ export async function generateMetadata({ params }: PageProps) {
   return {
     title: blog.title,
     description: blog.meta_description,
+    icons: {
+      icon: [
+        { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+        { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      ],
+      apple: [
+        { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+      ],
+    },
+    manifest: "/site.webmanifest",
     openGraph: {
       title: blog.title,
       description: blog.meta_description,
@@ -35,6 +43,11 @@ export async function generateMetadata({ params }: PageProps) {
     },
     alternates: {
       canonical: `/${locale}/blogs/${blog.topic.slug}/${blog.slug}/${blog.id}`,
+      languages: {
+        en: `/en/blog/${blog.topic.slug}/${blog.slug}/${blog.id}`,
+        ta: `/ta/blog/${blog.topic.slug}/${blog.slug}/${blog.id}`,
+        "x-default": `/blog/${blog.topic.slug}/${blog.slug}/${blog.id}`, // fallback/default
+      },
     },
   };
 }
@@ -42,23 +55,15 @@ export async function generateMetadata({ params }: PageProps) {
 const BlogPostPage = async ({ params }: PageProps) => {
   const { id, locale } = await params;
   const post = await getSingleBlogById({ id, lang: locale });
-  // console.log(post);
   return (
-    <>
+    <section className="sm:m-6 max-w-4xl">
       <BlogSinlgePost postData={post} />
-
       <BlogSinglePageClient
         id={id}
         avg_rating={post.avg_rating}
         total_ratings={post.total_ratings}
       />
-      {/* <RatingSection
-        postId={id}
-        avg_rating={post.avg_rating}
-        total_ratings={post.total_ratings}
-      />
-      <CommentSection postId={id} /> */}
-    </>
+    </section>
   );
 };
 

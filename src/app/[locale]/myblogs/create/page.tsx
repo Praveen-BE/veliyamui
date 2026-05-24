@@ -4,7 +4,7 @@ import "dotenv/config";
 
 import { useParams } from "next/navigation";
 import { useRef } from "react";
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 // Define the shape of your API response for better type safety
 interface BlogResponse {
@@ -42,7 +42,6 @@ const CreatePage = () => {
       if (response.ok) {
         // Cast the JSON response to our interface
         const data: BlogResponse = await response.json();
-        console.log(data);
         // Redirect to the dynamic edit route
         router.push(`/myblogs/edit/${data.id}`);
       } else {

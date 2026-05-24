@@ -1,28 +1,12 @@
-import React from "react";
+import SideBarNavButton from "@/ui/SideBarNavButton";
+import { getTranslations } from "next-intl/server";
 
-// Define the structure of your dynamic route segments
-interface RouteParams {
-  locale: string;
-  category: string;
-  titleSlug: string;
-  id: string;
-}
-
-// Next.js page props interface
-interface PageProps {
-  params: Promise<RouteParams>;
-}
-
-const BlogsByTopic = async ({ params }: PageProps) => {
-  const { titleSlug } = await params;
+const BlogsByTopic = async () => {
+  const t = await getTranslations("Footer");
 
   return (
-    <div className="p-8">
-      <h1>TypeScript Server Component</h1>
-
-      <p>
-        Slug: <strong>{titleSlug}</strong>
-      </p>
+    <div className="flex justify-center items-center flex-1 p-8">
+      <SideBarNavButton navName={t("blogs")} navLinkName="blogs" />
     </div>
   );
 };

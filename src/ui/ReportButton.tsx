@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, FormEvent, ChangeEvent } from "react";
-
+import "dotenv/config";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 // --- Types ---
 
 interface ReportButtonProps {
@@ -44,7 +45,7 @@ export default function ReportButton({
     setStatus("loading");
 
     try {
-      const res = await fetch("http://localhost:5000/api/reports", {
+      const res = await fetch(`${API_URL}/reports`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include", // send auth cookie

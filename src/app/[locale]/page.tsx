@@ -5,6 +5,45 @@ import HomeCardCarousel from "@/components/HomeCardCarousel";
 import FAQSection from "@/components/FAQSection";
 import TestimonialSection from "@/components/TestimonialSection";
 import HeroSection from "@/components/HeroSection";
+import heroSectionImage from "../../../public/blogsherosectionimage.jpg";
+
+interface PageProps {
+  params: Promise<{ locale: string }>;
+}
+// ✅ generateMetadata
+export async function generateMetadata({ params }: PageProps) {
+  const { locale } = await params;
+  const t = await getTranslations("HomePage");
+  // const blog = res[0];
+  return {
+    title: t("title"),
+    description: t("heroDescription"),
+    icons: {
+      icon: [
+        { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+        { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      ],
+      apple: [
+        { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+      ],
+    },
+    manifest: "/site.webmanifest",
+    openGraph: {
+      title: t("title"),
+      description: t("heroDescription"),
+      images: [heroSectionImage],
+      locale: locale,
+    },
+    alternates: {
+      canonical: `/${locale}`,
+      languages: {
+        en: "/en",
+        ta: "/ta",
+        "x-default": "/", // fallback/default
+      },
+    },
+  };
+}
 
 export default async function Home() {
   const t = await getTranslations("HomePage");

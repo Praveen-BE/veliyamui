@@ -3,10 +3,50 @@ import Pagination from "@/components/Pagination";
 import { getPostsAPI } from "@/lib/post/getPostsAPI";
 import SearchInput from "@/components/SearchInput";
 import FilterDropdown from "@/components/FilterDropdown";
+import { getTranslations } from "next-intl/server";
+import heroSectionImage from "../../../../public/blogsherosectionimage.jpg";
 
 interface BlogsPageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
   params: Promise<{ locale: string }>;
+}
+
+interface PageProps {
+  params: Promise<{ locale: string }>;
+}
+// ✅ generateMetadata
+export async function generateMetadata({ params }: PageProps) {
+  const { locale } = await params;
+  const t = await getTranslations("BlogPage");
+  // const blog = res[0];
+  return {
+    title: t("title"),
+    description: t("description"),
+    icons: {
+      icon: [
+        { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+        { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      ],
+      apple: [
+        { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+      ],
+    },
+    manifest: "/site.webmanifest",
+    openGraph: {
+      title: t("title"),
+      description: t("description"),
+      images: [heroSectionImage],
+      locale: locale,
+    },
+    alternates: {
+      canonical: `/${locale}/blog`,
+      languages: {
+        en: "/en/blog",
+        ta: "/ta/blog",
+        "x-default": "/blog", // fallback/default
+      },
+    },
+  };
 }
 
 const BlogsPage = async ({ searchParams, params }: BlogsPageProps) => {
@@ -49,7 +89,7 @@ const BlogsPage = async ({ searchParams, params }: BlogsPageProps) => {
     sortOrder: sortBy === "toprated" ? "DESC" : sort, // Force DESC for rating unless specified
     sortBy: sortBy,
   });
-  console.log(blogPostData);
+
   const totalItems = blogPostData?.total || 0;
 
   // 4. Generate Dynamic Heading Title including Top Rated status
@@ -83,7 +123,7 @@ const BlogsPage = async ({ searchParams, params }: BlogsPageProps) => {
   };
 
   return (
-    <div className="m-2 lg:max-w-5xl">
+    <div className="m-2 flex-1 lg:max-w-5xl">
       <div className="flex w-full items-center justify-between">
         <SearchInput initialValue={query} />
         <FilterDropdown />
