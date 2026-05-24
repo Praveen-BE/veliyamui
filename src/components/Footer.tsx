@@ -5,7 +5,7 @@ const Footer = async () => {
   const t = await getTranslations("Footer");
   return (
     <div className="flex flex-col w-full bg-primary h-20 gap-4 p-2 justify-center items-center">
-      <div className="flex px-4 w-screen gap-1 justify-around items-center lg:max-w-5xl text-sm font-medium sm:text-lg md:text-xl">
+      <div className="flex flex-wrap px-4 w-screen gap-1 justify-around items-center lg:max-w-5xl text-sm font-medium sm:text-lg md:text-xl">
         <Link className="text-center underline" href="/">
           {t("home")}
         </Link>

@@ -14,7 +14,7 @@ const FAQSection = () => {
       <FAQElement question={t("faq2Question")} answer={t("faq2Answer")} />
       <FAQElement question={t("faq3Question")} answer={t("faq3Answer")} />
       <div className="mt-6 flex justify-center">
-        <CTAOutlineButton ctaName={t("anyyouhave")} ctaLinkName="/faqs" />
+        <CTAOutlineButton ctaName={t("anyyouhave")} ctaLinkName="faqs" />
       </div>
     </div>
   );

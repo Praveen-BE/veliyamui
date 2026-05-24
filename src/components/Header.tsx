@@ -18,7 +18,7 @@ const Header = async ({ lang }: { lang: string }) => {
   // console.log(user);
   const t = await getTranslations("Header");
   return (
-    <div className="w-full h-16 px-2 bg-primary flex justify-between items-center">
+    <div className="w-full h-16 md:h-20 px-2 bg-primary flex flex-wrap justify-between items-center">
       {lang == "ta" ? (
         <Image
           className="w-20 h-12 md:w-28 md:h-20"

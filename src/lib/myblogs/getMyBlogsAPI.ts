@@ -1,4 +1,5 @@
 import "dotenv/config";
+import { Cossette_Texte } from "next/font/google";
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
 interface MyBlogsData {
@@ -24,16 +25,23 @@ interface MyBlogsData {
     display_name: string;
     email: string;
   };
-  categories: number[] | any[];
+  categories: any[];
   avg_rating: number;
   total_ratings: number;
+}
+
+interface APIResponse {
+  limit: number;
+  offset: number;
+  posts: MyBlogsData[];
+  total: number;
 }
 
 export async function getMyBlogsData({
   lang,
 }: {
   lang: string;
-}): Promise<MyBlogsData[]> {
+}): Promise<APIResponse> {
   const res = await fetch(`${API_URL}/posts/myblogs/${lang}`, {
     method: "GET",
     credentials: "include",
@@ -42,10 +50,9 @@ export async function getMyBlogsData({
     },
     cache: "no-store", // Use 'no-store' for dynamic dashboard data
   });
-
   if (!res.ok) {
     throw new Error("Failed to fetch posts");
   }
-
-  return await res.json();
+  const data = await res.json();
+  return data;
 }

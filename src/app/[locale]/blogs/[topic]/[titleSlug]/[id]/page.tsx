@@ -1,8 +1,9 @@
 import BlogSinlgePost from "@/components/BlogSinglePage";
-import CommentSection from "@/components/CommentSection";
-import RatingSection from "@/components/RatingComponent";
+import BlogSinglePageClient from "@/components/BlogSinglePageClient";
+// import CommentSection from "@/components/CommentSection";
+// import RatingSection from "@/components/RatingComponent";
 import { getSingleBlogById } from "@/lib/post/getSingleBlogById";
-import React from "react";
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
 
 interface RouteParams {
@@ -45,12 +46,18 @@ const BlogPostPage = async ({ params }: PageProps) => {
   return (
     <>
       <BlogSinlgePost postData={post} />
-      <CommentSection postId={id} />
-      <RatingSection
+
+      <BlogSinglePageClient
+        id={id}
+        avg_rating={post.avg_rating}
+        total_ratings={post.total_ratings}
+      />
+      {/* <RatingSection
         postId={id}
         avg_rating={post.avg_rating}
         total_ratings={post.total_ratings}
       />
+      <CommentSection postId={id} /> */}
     </>
   );
 };

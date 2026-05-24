@@ -3,6 +3,7 @@ import { useAuth } from "@/context/UserContext";
 import fetchRatingData from "@/lib/post/getUserRatingForPost";
 import postUserRatingPostAPI from "@/lib/post/postUserRatingPostAPI";
 import React, { useState, useEffect } from "react";
+import useSWR from "swr";
 
 interface RatingSectionProps {
   postId: number | string;
@@ -27,20 +28,27 @@ export default function RatingSection({
   const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<MessageState>({ type: "", text: "" });
   const { user } = useAuth();
-  // 1. Fetch initial post details (average and count)
-  useEffect(() => {
-    const fetchRate = async () => {
-      const data = await fetchRatingData({ postId });
-      if (data?.rating) {
-        setUserRating(data?.rating);
-      }
-    };
-    if (postId && user) {
-      fetchRate();
-    }
-  }, [user]);
 
-  // 2. Submit rating payload data to Express API
+  // ✅ Single source of truth — SWR handles deduplication, caching, and strict-mode safety
+  const { data } = useSWR(
+    // Key stays null until both postId and user are ready, preventing premature calls
+    postId && user ? `rating-${postId}-${user.user.id}` : null,
+    () => fetchRatingData({ postId }),
+    {
+      revalidateOnFocus: false, // Don't re-fetch when tab regains focus
+      revalidateOnReconnect: false, // Don't re-fetch on network reconnect
+      dedupingInterval: 60000, // Cache for 60s — blocks any duplicate calls within window
+    },
+  );
+
+  // Sync local state when SWR data arrives
+  useEffect(() => {
+    if (data?.rating) {
+      setUserRating(data.rating);
+    }
+  }, [data]);
+
+  // Submit rating to Express API
   const handleRatingSubmit = async (selectedRating: number) => {
     if (loading) return;
     setLoading(true);
@@ -48,7 +56,7 @@ export default function RatingSection({
 
     try {
       const data = await postUserRatingPostAPI({ postId, selectedRating });
-      // Sync UI state dynamically with returned database metrics calculation
+      // Sync UI state dynamically with returned database metrics
       if (data) {
         setAvgRating(data?.avgRating);
         setTotalRatings(data?.totalRatings);
@@ -99,7 +107,7 @@ export default function RatingSection({
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-          {/* Custom SVG Inline Star Icon */}
+          {/* Filled star icon for average display */}
           <svg
             width="20"
             height="20"
@@ -160,6 +168,13 @@ export default function RatingSection({
         })}
       </div>
 
+      {/* Loading indicator */}
+      {loading && (
+        <p style={{ fontSize: "13px", color: "#94a3b8", margin: "8px 0 0 0" }}>
+          Submitting...
+        </p>
+      )}
+
       {/* Response Messages */}
       {message.text && (
         <div
@@ -174,6 +189,7 @@ export default function RatingSection({
         </div>
       )}
 
+      {/* Show current user rating when no active message */}
       {userRating > 0 && !message.text && (
         <p style={{ fontSize: "12px", color: "#94a3b8", margin: "8px 0 0 0" }}>
           Your rating:{" "}

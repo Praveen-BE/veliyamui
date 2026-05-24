@@ -55,7 +55,7 @@ const BlogCard = ({
   return (
     <div
       key={`${id}`}
-      className="flex flex-col p-2 rounded-b-4xl shadow-sm/30 xl:max-w-5xl"
+      className="flex flex-col p-2 flex-1 rounded-b-4xl shadow-sm/30 xl:max-w-5xl"
     >
       <h1 className="font-semibold text-2xl pb-3 pt-4 sm:text-3xl line-clamp-2">
         {title}
@@ -72,7 +72,7 @@ const BlogCard = ({
           alt={cover_image_alt_tag}
           className="w-28 sm:w-36 md:w-44 object-cover rounded-2xl"
         /> */}
-        <div className="w-fit flex flex-col gap-0 sm:gap-1">
+        <div className="flex flex-col justify-around min-w-0 flex-1 gap-0 sm:gap-1">
           <ul className="font-normal text-xs sm:text-sm flex justify-between">
             <li>Jan 20, 2020</li>
             <li>5 min Read</li>
@@ -83,9 +83,11 @@ const BlogCard = ({
             </li>
           </ul>
           <p className="text-[16px] sm:text-lg line-clamp-4">{excerpt}</p>
-          <ul className="flex gap-6 sm:gap-9 sm:text-lg list-disc marker:text-ctaPrimary pl-4 ">
+          <ul className="flex gap-6 sm:gap-9 sm:text-lg list-disc marker:text-ctaPrimary pl-4 overflow-x-scroll">
             {categories.map((item) => (
-              <li key={item}>Tech</li>
+              <li key={item?.id} className="text-nowrap">
+                {item?.name}
+              </li>
             ))}
           </ul>
           <p>
@@ -130,10 +132,8 @@ export const MyBlogCard = ({
   avg_rating,
   total_ratings,
 }: MyBlogsData) => {
-  console.log("Single Post");
-  console.log(id);
   return (
-    <div className="relative w-fit h-fit">
+    <div className="relative w-full flex-1 h-fit">
       <BlogCard
         id={id}
         slug={slug}

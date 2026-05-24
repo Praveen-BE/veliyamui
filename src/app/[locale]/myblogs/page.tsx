@@ -6,6 +6,7 @@ import Pagination from "@/components/Pagination";
 import { getMyBlogsData } from "@/lib/myblogs/getMyBlogsAPI";
 import { FunnelIcon } from "@heroicons/react/24/outline";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
+import { useParams } from "next/navigation";
 
 interface MyBlogsData {
   id: string | number;
@@ -30,7 +31,7 @@ interface MyBlogsData {
     display_name: string;
     email: string;
   };
-  categories: number[] | any[];
+  categories: any[];
   avg_rating: number;
   total_ratings: number;
 }
@@ -41,22 +42,23 @@ interface BlogsPageProps {
 
 // 1. Remove 'async' from the component definition
 const MyBlogsPage = ({ searchParams }: BlogsPageProps) => {
+  const { locale } = useParams();
   const [posts, setPosts] = useState<MyBlogsData[]>([]);
   const [loading, setLoading] = useState(true);
-
+  const [itemsPerPage, setItemsPerPage] = useState(0);
+  const [totalItems, setTotalItems] = useState(0);
   // 2. Unwrap searchParams using React.use()
   const fetchedparams = use(searchParams);
   const currentPage = Number(fetchedparams?.page) || 1;
-
-  const itemsPerPage = 5;
-  const totalItems = 50; // Ideally, this should come from your API
 
   useEffect(() => {
     async function fetchPosts() {
       try {
         setLoading(true);
-        const data = await getMyBlogsData({ lang: "en" });
-        setPosts(data);
+        const data = await getMyBlogsData({ lang: `${locale}` });
+        setItemsPerPage(data.limit);
+        setTotalItems(data.total);
+        setPosts(data.posts);
       } catch (error) {
         console.error("Failed to fetch blogs:", error);
       } finally {
@@ -68,7 +70,7 @@ const MyBlogsPage = ({ searchParams }: BlogsPageProps) => {
 
   return (
     <div className="m-2 lg:max-w-5xl">
-      <div className="flex w-full">
+      {/* <div className="flex w-full">
         <div className="flex pl-4 pr-2 py-0.5 border overflow-hidden rounded-2xl">
           <input
             type="text"
@@ -81,7 +83,7 @@ const MyBlogsPage = ({ searchParams }: BlogsPageProps) => {
           <p>Filter</p>
           <FunnelIcon className="w-6 h-6 ml-1" />
         </div>
-      </div>
+      </div> */}
 
       <h1 className="mt-4 text-2xl font-bold">My Blogs</h1>
 

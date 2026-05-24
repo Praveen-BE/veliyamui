@@ -27,6 +27,10 @@ const SideMenuToggle = () => {
         <div className="absolute flex flex-col bg-ctaSecondary p-4 gap-1 w-64 right-0 top-16 z-10">
           <SideBarNavButton navName={t("home")} navLinkName="" />
           <SideBarNavButton navName={t("blogs")} navLinkName="blogs" />
+          <SideBarNavButton
+            navName={t("create")}
+            navLinkName="myblogs/create"
+          />
           <SideBarNavButton navName={t("myBlogs")} navLinkName="myblogs" />
           <SideBarNavButton navName={t("profile")} navLinkName="profile" />
           <SideBarNavButton navName={t("contact")} navLinkName="contact" />

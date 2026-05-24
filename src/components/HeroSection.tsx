@@ -9,8 +9,10 @@ const HeroSection = async () => {
   return (
     <section className="flex flex-col md:flex-row gap-4 px-4 pt-4 pb-4">
       <div className="flex flex-col gap-4 md:w-6/12">
-        <h1 className="font-bold text-2xl text-center">"{t("heroSlogan")}"</h1>
-        <p className="font-normal text-justify">
+        <h1 className="font-bold text-2xl md:text-3xl text-center">
+          "{t("heroSlogan")}"
+        </h1>
+        <p className="font-normal text-justify md:text-xl">
           &nbsp;&nbsp;&nbsp;&nbsp; {t("heroDescription")}
         </p>
         <div className="flex justify-center">

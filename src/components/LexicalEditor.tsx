@@ -16,6 +16,8 @@ import { HistoryExtension } from "@lexical/history";
 import { TabIndentationExtension } from "@lexical/extension";
 import { LexicalExtensionComposer } from "@lexical/react/LexicalExtensionComposer";
 import { OnChangePlugin } from "@lexical/react/LexicalOnChangePlugin";
+import { ImageNode } from "./ImageNode";
+import ImagesPlugin from "./ImagePlugin";
 
 // Define the prop type
 interface LexicalEditorProps {
@@ -36,6 +38,7 @@ const landingHeroExtension = defineExtension({
   name: "@lexical/website/landing-hero-editor",
   namespace: "@lexical/website/landing-hero-editor",
   theme: lexicalEditorTheme,
+  nodes: [ImageNode],
 });
 
 const LexicalEditor: React.FC<LexicalEditorProps> = ({
@@ -61,7 +64,7 @@ const LexicalEditor: React.FC<LexicalEditorProps> = ({
         {/* Toolbar — contains image upload button */}
         <LoadState lexicalJson={lexical_content} />
         <ToolbarPlugin />
-
+        <ImagesPlugin />
         {/* Editor area */}
         <div className="relative">
           <ContentEditable

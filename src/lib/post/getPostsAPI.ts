@@ -10,7 +10,8 @@ interface GetPostProps {
   search?: string;
   topic?: string;
   category?: string;
-  sortOrder?: "ASC" | "DESC"; // Added this based on our previous backend update
+  sortOrder?: "ASC" | "DESC";
+  sortBy?: "date" | "toprated" | "lowrated"; // Changed from any to explicit options
 }
 
 export async function getPostsAPI({
@@ -21,20 +22,24 @@ export async function getPostsAPI({
   search,
   topic,
   category,
-  sortOrder = "DESC",
+  sortOrder,
+  sortBy,
 }: GetPostProps) {
   try {
-    // 1. Use URLSearchParams to build the query string safely
+    // 1. Initialize query params with baseline parameters that are guaranteed to exist
     const queryParams = new URLSearchParams({
       lang: lang,
       limit: limit.toString(),
       offset: offset.toString(),
       author_id: author_id.toString(),
-      sortOrder: sortOrder,
     });
 
-    // 2. Only add optional filters if they actually have a value
-    if (search) queryParams.append("search", search);
+    // 2. Only append sorting parameters if they are explicitly passed
+    if (sortOrder) queryParams.append("sortOrder", sortOrder);
+    if (sortBy) queryParams.append("sortBy", sortBy);
+
+    // 3. Only add optional filters if they actually have content
+    if (search && search.trim() !== "") queryParams.append("search", search);
     if (topic) queryParams.append("topic", topic);
     if (category) queryParams.append("category", category);
 
@@ -43,20 +48,20 @@ export async function getPostsAPI({
       headers: {
         "Content-Type": "application/json",
       },
-      // Optional: Add cache: 'no-store' if you want fresh data every time
-      // or next: { revalidate: 60 } for ISR
-      next: { revalidate: 0 },
+      next: { revalidate: 0 }, // Fetches dynamic live data on every server request
     });
 
     if (!res.ok) {
       const errorText = await res.text();
       console.error(`API Error (${res.status}):`, errorText);
-      return []; // Return empty array instead of null to prevent .map errors
+      // Return a clean fallback structure matching your new backend response layout
+      return { total: 0, limit, offset, posts: [] };
     }
 
     return await res.json();
   } catch (error) {
     console.error("Error fetching get Posts API:", error);
-    return [];
+    // Return standard fallback object format to avoid structural crashes downstream
+    return { total: 0, limit, offset, posts: [] };
   }
 }

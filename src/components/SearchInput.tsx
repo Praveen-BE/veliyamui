@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { MagnifyingGlassIcon } from "@heroicons/react/24/solid";
+import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/24/solid";
 
 export default function SearchInput({
   initialValue,
@@ -36,6 +36,11 @@ export default function SearchInput({
         className="appearance-none border-none outline-none bg-transparent w-36 sm:w-64 xl:w-96"
         placeholder="Search here..."
       />
+
+      <button onClick={() => setText("")} type="submit">
+        <XMarkIcon className="w-6 h-6 text-gray-500" />
+      </button>
+
       <button type="submit">
         <MagnifyingGlassIcon className="w-6 h-6 text-gray-500" />
       </button>

@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState, useEffect, useContext, FormEvent } from "react";
+import React, { useState, useContext, FormEvent } from "react";
 import { UserContext } from "@/context/UserContext";
 import ReportButton from "@/ui/ReportButton";
 import CommentCard from "./CommentCard";
+import useSWR from "swr";
 
 // --- Types ---
 
@@ -14,42 +15,49 @@ export interface Comment {
   user_id?: string | number;
   user_name?: string;
   created_at?: string;
-  // Add any other fields returned by your API
 }
 
 export interface User {
   id: string | number;
   name: string;
-  // Add other user fields
 }
 
 interface CommentSectionProps {
   postId: string | number;
 }
 
+// --- Fetcher ---
+// Defined outside the component so it's never recreated on re-renders
+const fetchComments = async (url: string): Promise<Comment[]> => {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error("Failed to fetch comments");
+  return res.json();
+};
+
 // --- Component ---
 
 export default function CommentSection({ postId }: CommentSectionProps) {
-  const [comments, setComments] = useState<Comment[]>([]);
   const [content, setContent] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
   const [submitting, setSubmitting] = useState<boolean>(false);
 
-  // Assuming UserContext provides { user: User | null }
   const { user } = useContext(UserContext) as { user: User | null };
 
-  useEffect(() => {
-    setLoading(true);
-    fetch(`http://localhost:5000/api/comments/${postId}`)
-      .then((r) => r.json())
-      .then((data: Comment[]) => setComments(data))
-      .catch(console.error)
-      .finally(() => setLoading(false));
-  }, [postId]);
+  // ✅ SWR handles deduplication, caching, and React Strict Mode double-invoke cleanly
+  const {
+    data: comments = [],
+    isLoading,
+    mutate,
+  } = useSWR<Comment[]>(
+    `http://localhost:5000/api/comments/${postId}`,
+    fetchComments,
+    {
+      revalidateOnFocus: false, // Don't re-fetch when tab regains focus
+      revalidateOnReconnect: false, // Don't re-fetch on network reconnect
+      dedupingInterval: 30000, // Cache for 30s — blocks any duplicate calls within window
+    },
+  );
 
-  /**
-   * Handles both top-level comments and replies
-   */
+  // Handles both top-level comments and replies
   async function handleSubmit(
     text: string,
     parentId: string | number | null = null,
@@ -69,15 +77,20 @@ export default function CommentSection({ postId }: CommentSectionProps) {
 
       const newComment: Comment = await res.json();
 
-      setComments((prev) => [
-        ...prev,
-        {
-          ...newComment,
-          user_id: user?.id,
-          user_name: user?.name ?? "You",
-          parent_id: parentId,
-        },
-      ]);
+      // ✅ Optimistically update SWR cache — no extra GET needed after POST
+      mutate(
+        (prev = []) => [
+          ...prev,
+          {
+            ...newComment,
+            user_id: user?.id,
+            user_name: user?.name ?? "You",
+            parent_id: parentId,
+          },
+        ],
+        false, // false = don't revalidate (re-fetch) after mutation
+      );
+
       return true;
     } catch (err) {
       alert("Failed to post comment.");
@@ -100,7 +113,8 @@ export default function CommentSection({ postId }: CommentSectionProps) {
       );
 
       if (res.ok) {
-        setComments((prev) => prev.filter((c) => c.id !== commentId));
+        // ✅ Optimistically remove from SWR cache — no extra GET needed after DELETE
+        mutate((prev = []) => prev.filter((c) => c.id !== commentId), false);
       }
     } catch (err) {
       console.error("Delete failed", err);
@@ -120,7 +134,7 @@ export default function CommentSection({ postId }: CommentSectionProps) {
         )}
       </div>
 
-      {loading ? (
+      {isLoading ? (
         <p className="text-sm text-gray-400">Loading comments…</p>
       ) : topLevel.length === 0 ? (
         <p className="text-sm text-gray-400">No comments yet.</p>
