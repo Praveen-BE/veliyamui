@@ -8,19 +8,6 @@ interface SignupCredentials {
   language_code?: string;
 }
 
-interface SignupResponse {
-  message: string;
-  user: {
-    id: string;
-    email: string;
-    role: string;
-    display_name: string;
-    bio: string;
-    language_code: string;
-    created_at: string;
-  };
-}
-
 /**
  * Logs the user in and returns the user data/token
  */
@@ -29,7 +16,7 @@ export async function authSignupAPI({
   email,
   password,
   language_code,
-}: SignupCredentials): Promise<SignupResponse | null> {
+}: SignupCredentials): Promise<any | void> {
   try {
     const res = await fetch(`${API_URL}/auth/signup`, {
       method: "POST",
@@ -49,10 +36,10 @@ export async function authSignupAPI({
 
     if (!res.ok) {
       const errorData = await res.json();
-      throw new Error(errorData.message || "Failed to login");
+      throw new Error(errorData.error || "Failed to signup");
     }
-
-    return (await res.json()) as SignupResponse;
+    const data = await res.json();
+    return data;
   } catch (error) {
     console.error("Error logging in:", error);
     return null;

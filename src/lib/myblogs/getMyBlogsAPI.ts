@@ -42,7 +42,7 @@ export async function getMyBlogsData({
 }: {
   lang: string;
 }): Promise<APIResponse> {
-  const res = await fetch(`${API_URL}/posts/myblogs/${lang}`, {
+  const res = await fetch(`${API_URL}/myblogs/${lang}`, {
     method: "GET",
     credentials: "include",
     headers: {

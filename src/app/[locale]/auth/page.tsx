@@ -5,6 +5,7 @@ import { authSignupAPI } from "@/lib/auth/authSignupAPI";
 import { useParams, useRouter } from "next/navigation";
 import React, { useRef, useState } from "react";
 
+// app/[locale]/auth/page.tsx
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(false);
   const label_name = useRef<HTMLInputElement>(null);
@@ -14,6 +15,7 @@ const AuthPage = () => {
   const { locale } = useParams();
   const { user, setUser } = useAuth();
   const route = useRouter();
+  const [signupMessage, setSignupMessage] = useState(null);
 
   const normalizedLocale = Array.isArray(locale) ? locale[0] : locale; // ensure string
   const loginSubmit = async () => {
@@ -26,15 +28,43 @@ const AuthPage = () => {
     route.push("/");
   };
   const signupSubmit = async () => {
+    if (password.current?.value !== confirmPassword.current?.value) {
+      // show error
+      return;
+    }
     const res = await authSignupAPI({
       display_name: label_name.current?.value,
       email: email.current?.value,
       password: password.current?.value,
       language_code: normalizedLocale,
     });
-    setUser(res ?? null);
-    route.push("/");
+    setSignupMessage(res?.message);
   };
+  const handleGoogleLogin = () => {
+    const rootUrl = "https://accounts.google.com/o/oauth2/v2/auth";
+
+    const options = {
+      redirect_uri: "http://localhost:3000/auth/callback", // Your frontend callback
+      client_id: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
+      access_type: "offline",
+      response_type: "code",
+      prompt: "consent",
+      scope: [
+        "https://www.googleapis.com/auth/userinfo.profile",
+        "https://www.googleapis.com/auth/userinfo.email",
+      ].join(" "),
+    };
+
+    const qs = new URLSearchParams(options).toString();
+    window.location.href = `${rootUrl}?${qs}`;
+  };
+  if (signupMessage) {
+    return (
+      <div className="flex flex-1 justify-center items-center">
+        {signupMessage}
+      </div>
+    );
+  }
   return (
     <div className="flex flex-1 justify-center items-center">
       <div className="mt-4 w-[360] sm:w-xl h-fit flex flex-col bg-primary items-center gap-4 shadow-2xl rounded-2xl">
@@ -77,6 +107,13 @@ const AuthPage = () => {
             Submit
           </button>
         </div>
+        <hr className="" />
+        <button
+          onClick={handleGoogleLogin}
+          className="px-4 py-2 bg-blue-600 text-white rounded"
+        >
+          Sign in with Google
+        </button>
         <p>
           Already have Account ?{" "}
           <button onClick={() => setIsLogin(!isLogin)}>
