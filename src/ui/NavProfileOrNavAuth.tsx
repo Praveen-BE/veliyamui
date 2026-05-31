@@ -25,11 +25,21 @@ const NavProfileOrNavAuth = ({ initialUser }: any) => {
     <>
       {currentUser ? (
         <Link href="/profile">
-          <Image
-            className="w-9 h-9 md:w-12 md:h-12 rounded-full border border-textPrimary"
-            src={NotInterestSetProfile}
-            alt="User Profile"
-          />
+          {user?.user?.profile_picture_url ? (
+            <Image
+              width="100"
+              height="100"
+              className="w-9 h-9 md:w-12 md:h-12 rounded-full border border-textPrimary"
+              src={user?.user?.profile_picture_url}
+              alt={user?.user.display_name || "User Profile"}
+            />
+          ) : (
+            <Image
+              className="w-9 h-9 md:w-12 md:h-12 rounded-full border border-textPrimary"
+              src={NotInterestSetProfile}
+              alt={user?.user.display_name || "User Profile"}
+            />
+          )}
         </Link>
       ) : (
         <Link

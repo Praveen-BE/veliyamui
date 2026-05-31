@@ -7,12 +7,14 @@ import { useAuth } from "@/context/UserContext"; // Adjust path as needed
 import { useParams } from "next/navigation";
 import { usePathname, useRouter } from "@/navigation";
 import getProfile from "@/lib/profile/getProfile";
+import ProfilePicUpload from "@/components/ProfilePicUpload";
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 interface FormData {
   id: string;
   email: string;
   role: string;
   display_name: string;
+  profile_picture_url: string | null;
   bio: string;
   language_code: string;
   created_at: string;
@@ -24,6 +26,7 @@ interface UserProfile {
     email: string;
     role: string;
     display_name: string;
+    profile_picture_url: string | null;
     bio: string;
     language_code: string;
     created_at: string;
@@ -42,6 +45,7 @@ export default function ProfilePage() {
     email: "",
     role: "",
     display_name: "",
+    profile_picture_url: null,
     bio: "",
     language_code: "",
     created_at: "",
@@ -59,6 +63,7 @@ export default function ProfilePage() {
           email: user?.user?.email || "",
           role: user?.user.role || "",
           display_name: user?.user.display_name || "",
+          profile_picture_url: user?.user.profile_picture_url || null,
           bio: user?.user?.bio || "",
           language_code: user?.user?.language_code || "",
           created_at: user?.user?.created_at || "",
@@ -86,6 +91,7 @@ export default function ProfilePage() {
               email: data.email || "",
               role: data.role || "",
               display_name: data.display_name || "",
+              profile_picture_url: data.profile_picture_url || null,
               bio: data.bio || "",
               language_code: data.language_code || "",
               created_at: data.created_at || "",
@@ -112,7 +118,14 @@ export default function ProfilePage() {
         method: "PATCH",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData as FormData),
+        body: JSON.stringify({
+          id: formData.id,
+          email: formData.email,
+          role: formData.role,
+          display_name: formData.display_name,
+          bio: formData.bio,
+          language_code: formData.language_code,
+        }),
       });
 
       if (response.ok) {
@@ -125,6 +138,7 @@ export default function ProfilePage() {
           email: data?.user?.email || "",
           role: data?.user?.role || "",
           display_name: data?.user?.display_name || "",
+          profile_picture_url: data?.user?.profile_picture_url || null, // <-- ADD THIS LINE
           bio: data?.user?.bio || "",
           language_code: data?.user?.language_code || "",
           created_at: data?.user?.created_at || "",
@@ -140,11 +154,34 @@ export default function ProfilePage() {
     }
   };
 
+  const handleAvatarSuccess = (newUrl: string) => {
+    // 1. Update global context so the header/navbar updates immediately
+    if (user) {
+      setUser({
+        ...user,
+        user: {
+          ...user.user,
+          profile_picture_url: newUrl,
+        },
+      });
+    }
+
+    // 2. Update local form state string link
+    setFormData((prev) => ({
+      ...prev,
+      profile_picture_url: newUrl,
+    }));
+  };
+
   return (
     <div className="flex-1">
       <div className="max-w-2xl mx-auto p-6 bg-white shadow-md rounded-lg mt-10">
         <h1 className="text-2xl font-bold mb-6">User Profile</h1>
-
+        <ProfilePicUpload
+          currentImgUrl={user?.user.profile_picture_url || null}
+          languageCode={`${locale}`}
+          onUploadSuccess={handleAvatarSuccess}
+        />
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700">

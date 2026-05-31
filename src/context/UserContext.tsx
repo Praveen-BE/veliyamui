@@ -7,6 +7,7 @@ export interface User {
     email: string;
     role: string;
     display_name: string;
+    profile_picture_url: string | null;
     bio: string;
     language_code: string;
     created_at: string;

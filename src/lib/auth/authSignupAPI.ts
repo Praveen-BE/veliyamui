@@ -6,6 +6,7 @@ interface SignupCredentials {
   email?: string;
   password?: string;
   language_code?: string;
+  policy_version: string;
 }
 
 /**
@@ -16,6 +17,7 @@ export async function authSignupAPI({
   email,
   password,
   language_code,
+  policy_version,
 }: SignupCredentials): Promise<any | void> {
   try {
     const res = await fetch(`${API_URL}/auth/signup`, {
@@ -29,6 +31,7 @@ export async function authSignupAPI({
         email: email,
         password: password,
         language_code: language_code,
+        policy_version: policy_version,
       }),
       // Note: next.revalidate is typically used for GET requests.
       // It may be ignored by Next.js for POST requests.

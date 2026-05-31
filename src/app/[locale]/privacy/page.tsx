@@ -27,12 +27,12 @@ export default function PrivacyConsent() {
             your data. For full details, please read our Privacy Policy.
           </p>
         </div>
-        <button
+        {/* <button
           onClick={handleAccept}
           className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
         >
           I Accept
-        </button>
+        </button> */}
       </div>
     </div>
   );

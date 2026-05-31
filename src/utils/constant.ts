@@ -42,3 +42,6 @@ export const CatagoriesListData = [
     created_at: "2026-01-18T10:39:15.116Z",
   },
 ];
+
+// Define current policy version hardcoded or pulled from an environment variable
+export const CURRENT_POLICY_VERSION = "v1.0.0";
